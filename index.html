@@ -1,76 +1,120 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prueba de pagina web</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Elige un curso de HTML, CSS o práctica combinada en Aula Web.">
+  <title>Aula Web | Cursos de HTML y CSS</title>
+  <link rel="stylesheet" href="curso/estilos.css">
 </head>
-
 <body>
-    <!-- CONOCIENDO LOS NIVELES DE TEXTO -->
+  <header class="encabezado">
+    <div class="contenedor barra-principal">
+      <a class="marca" href="/"><span class="marca-icono" aria-hidden="true">&lt;/&gt;</span> Aula Web</a>
+      <nav class="nav-principal" aria-label="Navegación principal">
+        <a href="#rutas">Cursos</a>
+        <a href="ejemplo-textos.html">Ejemplo de textos</a>
+      </nav>
+    </div>
+  </header>
 
-    <h1>Encabezado de nivel 1</h1>
-    <h2>Encabezado de nivel 2</h2>
-    <h3>Encabezado de nivel 3</h3>
-    <h4>Encabezado de nivel 4</h4>
-    <h5>Encabezado de nivel 5</h5>
-    <h6>Encabezado de nivel 6</h6>
+  <main>
+    <section class="portada-inicio">
+      <div class="contenedor portada-contenido">
+        <div class="portada-texto">
+          <span class="etiqueta-portada">CUADERNO DE TALLER · 001</span>
+          <h1>Aprende el código. <span>Hazlo tuyo.</span></h1>
+          <p>Un taller práctico para entender cómo se construye una página: primero la estructura, luego el estilo y, al final, todo junto.</p>
+          <div class="acciones-portada">
+            <a class="boton-principal" href="#rutas">Explorar los cursos <span aria-hidden="true">→</span></a>
+          </div>
+          <ul class="datos-portada" aria-label="Características del curso">
+            <li><span aria-hidden="true">01</span> Entiende cada etiqueta</li>
+            <li><span aria-hidden="true">02</span> Cambia el código</li>
+            <li><span aria-hidden="true">03</span> Comprueba qué pasa</li>
+          </ul>
+        </div>
+        <div class="portada-tarjeta" aria-label="Los tres pasos del aprendizaje">
+          <div class="ventana-barra"><span></span><span></span><span></span><small>tu cuaderno de trabajo</small></div>
+          <div class="ruta-pasos">
+            <div><span class="ruta-numero html-numero">01</span><span><strong>HTML</strong><small>La estructura</small></span></div>
+            <span class="ruta-flecha" aria-hidden="true">↓</span>
+            <div><span class="ruta-numero css-numero">02</span><span><strong>CSS</strong><small>La apariencia</small></span></div>
+            <span class="ruta-flecha" aria-hidden="true">↓</span>
+            <div><span class="ruta-numero combinado-numero">03</span><span><strong>HTML + CSS</strong><small>Tu proyecto completo</small></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <section class="contenedor seccion-curso" id="rutas">
+      <div class="encabezado-seccion">
+        <div>
+          <span class="sobrelinea">ELIGE POR DÓNDE EMPEZAR</span>
+          <h2>Tres rutas, paso a paso</h2>
+          <p>Tres etapas. Sin atajos: primero entiende las piezas, luego aprende a combinarlas.</p>
+        </div>
+      </div>
+      <div class="rutas-cursos">
+        <article class="ruta-curso ruta-html">
+          <span class="ruta-etiqueta">CURSO 01</span>
+          <span class="ruta-icono" aria-hidden="true">&lt;H&gt;</span>
+          <h3>HTML</h3>
+          <p>Aprende qué es cada elemento y cómo organizar el contenido de una página.</p>
+          <ul>
+            <li>Textos y listas</li>
+            <li>nav, section, article y div</li>
+            <li>Enlaces, imágenes y formularios</li>
+          </ul>
+          <a class="boton-ruta" href="curso/html/index.html">Entrar al curso de HTML <span aria-hidden="true">→</span></a>
+        </article>
 
-    <P>Esto nos sirve para realizar un parrafo dentro de nuestra pagina web</P>
+        <article class="ruta-curso ruta-css">
+          <span class="ruta-etiqueta">CURSO 02</span>
+          <span class="ruta-icono" aria-hidden="true">#</span>
+          <h3>CSS</h3>
+          <p>Aprende a cambiar colores, fuentes, espacios y la distribución de los elementos.</p>
+          <ul>
+            <li>Colores, texto y bordes</li>
+            <li>Display y centrar elementos</li>
+            <li>Flexbox, columnas e imágenes</li>
+          </ul>
+          <a class="boton-ruta" href="curso/css/index.html">Entrar al curso de CSS <span aria-hidden="true">→</span></a>
+        </article>
 
-    <p>Hola      mundo
-        esto está en otra línea
-        en el código</p>
+        <article class="ruta-curso ruta-combinada">
+          <span class="ruta-etiqueta">CURSO 03 · DESPUÉS DE HTML Y CSS</span>
+          <span class="ruta-icono" aria-hidden="true">&lt;/&gt;</span>
+          <h3>HTML + CSS</h3>
+          <p>Combina estructura y estilos, entiende cómo se conectan y construye una página completa.</p>
+          <ul>
+            <li>Teoría de HTML y CSS juntos</li>
+            <li>Ejemplos guiados</li>
+            <li>Editor con vista previa en vivo</li>
+          </ul>
+          <a class="boton-ruta" href="curso/combinado/index.html">Entrar al curso combinado <span aria-hidden="true">→</span></a>
+        </article>
+      </div>
 
+      <aside class="nota-curso">
+        <span class="nota-icono" aria-hidden="true">i</span>
+        <p><strong>Ruta recomendada:</strong> empieza por HTML, continúa con CSS y luego pasa al curso combinado. Puedes avanzar a tu propio ritmo.</p>
+      </aside>
+      <section class="bloque-practica-inicio">
+        <div class="bloque-practica-sello" aria-hidden="true">A</div>
+        <div class="bloque-practica-texto">
+          <span class="sobrelinea">CUANDO TERMINES UNA LECCIÓN</span>
+          <h2>No te quedes mirando. Ponte a prueba.</h2>
+          <p>Resuelve retos, recibe una nota por criterios, pide una pista o compara tu trabajo con una solución posible.</p>
+        </div>
+        <a class="boton-practica-inicio" href="curso/ejercicios/index.html">Ir a los ejercicios <span aria-hidden="true">↗</span></a>
+      </section>
+      <p class="ejemplos-previos">Material anterior: <a href="ejemplo-textos.html">práctica de textos</a> <span aria-hidden="true">·</span> <a href="index2.html">página de empresa</a>.</p>
+    </section>
+  </main>
 
-    <!-- ejemplo de uso de las etiquetas de texto que vimos -->
-     <h1>EJEMPLO CON DATOS PERSONALES</h1>
-     <h1>NOMBRE</h1>
-     <h2>Tu nombre</h2>
-     <h1>APELLIDOS</h1>
-     <h2>Tus apellidos</h2>
-     <h1>EDAD</h1>
-     <h2>Tu edad</h2>
-     <h1>CARRERA</h1>
-     <h2>Tu carrera</h2>
-     <h1>QUE TE GUSTA HACER</h1>
-     <h2>Lo que te gusta hacer</h2>
-     <h1>TU MAYOR SUENO</h1>
-     <p>Describe tu mayor sueño</p>
-
-     <!-- PASAMOS CON LOS SIGUENTES EJEMPLOS DE USO DE LAS ETIQUETAS DE TEXTO -->
-      <P>USAREMOS A LA ETIQUETA "BR" QUE NOS PERMITE REALIZAR UN SALTO DE LÍNEA Y TMABIEN "HR" PARA REALIZAR UNA LÍNEA HORIZONTAL</P>
-
-      <p>Calle Bolívar #123<br>Cochabamba<br>Bolivia</p>
-
-      <h2>Sección 1</h2>
-        <p>Texto...</p>
-        <hr>
-        <h2>Sección 2</h2>
-
-        <strong>Importante</strong>
-        <br>
-        <em>énfasis</em>
-
-
-        <p>Esta es una <strong>advertencia importante</strong> y esto lo digo <em>con énfasis</em>.</p>
-        <p>Antes costaba <del>Bs 100</del> y ahora <mark>Bs 80</mark>.</p>
-        <p>La fórmula del agua es H<sub>2</sub>O y mi casa mide 100 m<sup>2</sup>.</p>
-
-
-        <blockquote>
-            La educación es el arma más poderosa para cambiar el mundo.
-        </blockquote>
-        <p>Esa frase se atribuye a <cite>Nelson Mandela</cite>.</p>
-
-        <pre>
-        Línea 1
-            Línea 2 con sangría
-        </pre>
-
-        <!-- Esto es un comentario: el navegador lo ignora -->
-        <p>Esto sí se ve.</p>
-
+  <footer class="pie">
+    <p>Aula Web <span aria-hidden="true">·</span> Aprende, prueba y crea.</p>
+  </footer>
 </body>
 </html>
