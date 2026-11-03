@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Laboratorio interactivo para probar HTML y CSS en el navegador.">
+  <title>Laboratorio interactivo | Aula Web</title>
+  <link rel="stylesheet" href="estilos.css">
+  <script src="laboratorio.js" defer></script>
+</head>
+<body class="pagina-laboratorio">
+  <header class="encabezado">
+    <div class="contenedor barra-principal">
+      <a class="marca" href="index.html"><span class="marca-icono" aria-hidden="true">&lt;/&gt;</span> Aula Web</a>
+      <nav class="nav-principal" aria-label="Navegación principal">
+        <a href="combinado/index.html">Curso combinado</a>
+        <a href="#guia">Guía rápida</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="contenedor laboratorio-contenido">
+    <a class="volver-curso" href="combinado/index.html"><span aria-hidden="true">←</span> Volver al curso combinado</a>
+    <div class="laboratorio-titulo">
+      <div>
+        <span class="sobrelinea">AULA WEB / PRÁCTICA</span>
+        <h1>Laboratorio interactivo</h1>
+        <p>Escribe HTML y CSS, y mira cómo cambia tu página al instante.</p>
+      </div>
+      <span class="etiqueta-sin-instalar"><span aria-hidden="true">●</span> Funciona en tu navegador</span>
+    </div>
+
+    <section class="area-trabajo" aria-label="Editor y vista previa">
+      <div class="panel-editor">
+        <div class="barra-herramientas">
+          <label for="ejemplo">Empezar con un ejemplo</label>
+          <select id="ejemplo" name="ejemplo">
+            <option value="tarjeta">Tarjeta personal</option>
+            <option value="articulo">Artículo sencillo</option>
+            <option value="columnas">Tarjetas en columnas</option>
+          </select>
+          <button class="boton-restablecer" id="restablecer" type="button">Restablecer ejemplo</button>
+        </div>
+
+        <div class="pestanas-editor" role="tablist" aria-label="Tipo de código">
+          <button class="pestana-editor activa" id="tab-html" type="button" role="tab" aria-selected="true" aria-controls="panel-html" data-tab="html"><span class="punto-html"></span> HTML <span class="etiqueta-archivo">index.html</span></button>
+          <button class="pestana-editor" id="tab-css" type="button" role="tab" aria-selected="false" aria-controls="panel-css" data-tab="css" tabindex="-1"><span class="punto-css"></span> CSS <span class="etiqueta-archivo">estilos.css</span></button>
+        </div>
+
+        <div class="editor-cuerpo">
+          <div class="editor-panel" id="panel-html" role="tabpanel" aria-labelledby="tab-html">
+            <label class="sr-only" for="codigo-html">Código HTML editable</label>
+            <textarea id="codigo-html" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="ayuda-editor" wrap="off"></textarea>
+          </div>
+          <div class="editor-panel" id="panel-css" role="tabpanel" aria-labelledby="tab-css" hidden>
+            <label class="sr-only" for="codigo-css">Código CSS editable</label>
+            <textarea id="codigo-css" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="ayuda-editor" wrap="off"></textarea>
+          </div>
+          <p class="ayuda-editor" id="ayuda-editor">Consejo: puedes editar el texto, los colores y los tamaños. La vista se actualiza automáticamente.</p>
+        </div>
+      </div>
+
+      <section class="panel-vista" aria-labelledby="titulo-vista">
+        <div class="cabecera-vista">
+          <div><span class="sobrelinea">RESULTADO</span><h2 id="titulo-vista">Vista previa</h2></div>
+          <span class="estado-vista"><span class="punto-estado"></span><span id="estado-vista" aria-live="polite">Lista para editar</span></span>
+        </div>
+        <iframe id="vista-previa" title="Vista previa del código HTML y CSS" sandbox="" referrerpolicy="no-referrer"></iframe>
+        <p class="nota-vista">El resultado está aislado: el código del editor no puede ejecutar JavaScript ni controlar esta página.</p>
+      </section>
+    </section>
+
+    <section class="guia-practica" id="guia">
+      <div class="guia-intro">
+        <span class="sobrelinea">PRUÉBALO TÚ</span>
+        <h2>Una guía para empezar</h2>
+        <p>No tienes que memorizar todo. Cambia una cosa cada vez y observa el resultado.</p>
+      </div>
+      <ol class="pasos-guia">
+        <li><span class="numero-paso">1</span><div><h3>Elige una base</h3><p>Usa el menú de ejemplos para cargar una tarjeta, un artículo o una cuadrícula.</p></div></li>
+        <li><span class="numero-paso">2</span><div><h3>Cambia el contenido</h3><p>En la pestaña HTML, cambia el título o el texto. Busca las etiquetas <code>&lt;h1&gt;</code> y <code>&lt;p&gt;</code>.</p></div></li>
+        <li><span class="numero-paso">3</span><div><h3>Personaliza el estilo</h3><p>En CSS, cambia <code>color</code>, <code>background-color</code>, <code>font-size</code> o <code>padding</code>.</p></div></li>
+      </ol>
+      <aside class="reto-practica">
+        <span class="reto-icono" aria-hidden="true">✦</span>
+        <div><strong>Pequeño reto</strong><p>Cambia el color del título, añade una frase nueva en HTML y prueba qué sucede al cambiar <code>border-radius</code>.</p></div>
+      </aside>
+    </section>
+
+    <p class="aviso-laboratorio">Este es un entorno de práctica: al recargar la página, el editor vuelve al ejemplo inicial.</p>
+  </main>
+
+  <footer class="pie">
+    <p><a href="combinado/index.html">Aula Web</a> <span aria-hidden="true">·</span> Aprende, prueba y crea.</p>
+  </footer>
+</body>
+</html>

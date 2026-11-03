@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Práctica de HTML | Aula Web</title>
+  <link rel="stylesheet" href="../estilos.css">
+  <script src="../mini-laboratorios.js" defer></script>
+</head>
+<body class="pagina-practica pagina-practica-html">
+  <header class="encabezado">
+    <div class="contenedor barra-principal">
+      <a class="marca" href="../index.html"><span class="marca-icono" aria-hidden="true">&lt;/&gt;</span> Aula Web</a>
+      <nav class="nav-principal" aria-label="Navegación de la práctica">
+        <a href="index.html">Curso de HTML</a>
+        <a href="../css/index.html">Curso de CSS</a>
+        <a href="../combinado/index.html">Combinado</a>
+      </nav>
+    </div>
+  </header>
+  <main class="contenedor practica-contenido">
+    <a class="volver-curso" href="index.html"><span aria-hidden="true">←</span> Volver al curso de HTML</a>
+    <section class="mini-laboratorio" data-mini-lab data-mode="html" aria-labelledby="practica-html-titulo">
+      <div class="mini-lab-intro">
+        <span class="sobrelinea">CURSO 01 · SOLO HTML</span>
+        <h1 id="practica-html-titulo">Práctica de HTML</h1>
+        <p>Edita el contenido y las etiquetas. El resultado ocupa todo el ancho para que puedas inspeccionarlo con comodidad. El estilo se deja sencillo: este ejercicio trata de la estructura.</p>
+        <p class="nota-ruta">Nota: HTML crea los elementos. Las columnas y su apariencia se controlan con CSS; puedes probarlas en la práctica de CSS o en el curso combinado.</p>
+      </div>
+      <div class="mini-lab-controles">
+        <label for="ejemplo-html">Ejemplo para empezar</label>
+        <select id="ejemplo-html" data-example>
+          <option value="texto">Títulos y párrafos</option>
+          <option value="secciones">Secciones y artículos</option>
+          <option value="lista">Lista y enlaces</option>
+          <option value="formulario">Formulario</option>
+        </select>
+        <button type="button" class="boton-restablecer" data-reset>Restablecer ejemplo</button>
+      </div>
+      <div class="mini-lab-disposicion">
+        <div class="mini-editor">
+          <div class="mini-editor-encabezado"><span class="punto-html"></span><strong>HTML</strong><small>contenido.html</small></div>
+          <label class="sr-only" for="editor-html">Editor de HTML</label>
+          <textarea id="editor-html" data-editor spellcheck="false" autocomplete="off" autocapitalize="off" wrap="off" aria-describedby="ayuda-html"></textarea>
+          <p class="ayuda-editor" id="ayuda-html">Edita el texto y las etiquetas. La vista previa se actualiza sola.</p>
+        </div>
+        <div class="mini-vista">
+          <div class="mini-vista-encabezado"><span class="sobrelinea">RESULTADO HTML</span><span class="estado-vista"><span class="punto-estado"></span><span data-status aria-live="polite">Lista para editar</span></span></div>
+          <iframe data-preview title="Vista previa amplia del ejercicio HTML" sandbox="" referrerpolicy="no-referrer"></iframe>
+          <p class="nota-vista">Vista de escritorio a ancho completo. La vista previa está aislada y no ejecuta JavaScript.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="pie"><p>Aula Web <span aria-hidden="true">·</span> Práctica de HTML</p></footer>
+</body>
+</html>

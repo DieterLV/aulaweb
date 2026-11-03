@@ -1,0 +1,195 @@
+/* ===== Variables: cambia los colores aquí ===== */
+:root {
+  --azul: #2b4c7e;
+  --azul-oscuro: #1c3257;
+  --acento: #f2a900;
+  --fondo: #f4f6fb;
+  --blanco: #ffffff;
+  --texto: #1f2937;
+  --texto-suave: #5b6675;
+  --borde: #dbe1ec;
+  --fuente: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+}
+
+/* ===== Base ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+body {
+  font-family: var(--fuente);
+  color: var(--texto);
+  background: var(--fondo);
+  line-height: 1.6;
+}
+
+.contenedor {
+  width: min(100% - 2rem, 960px);
+  margin-inline: auto;
+}
+
+:focus-visible {
+  outline: 3px solid var(--acento);
+  outline-offset: 3px;
+}
+
+/* ===== Encabezado y menú ===== */
+.encabezado {
+  background: var(--azul);
+  color: var(--blanco);
+  padding: 1.5rem 0 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.titulo-principal {
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  margin-bottom: 0.75rem;
+}
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+}
+
+.menu a {
+  color: #dbe6f7;
+  text-decoration: none;
+  font-size: 0.95rem;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+}
+
+.menu a:hover {
+  color: var(--blanco);
+  border-bottom-color: var(--acento);
+}
+
+/* ===== Secciones ===== */
+.seccion {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.seccion-titulo {
+  font-size: 1.5rem;
+  color: var(--azul-oscuro);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid var(--acento);
+  display: inline-block;
+}
+
+/* ===== 1. Datos personales ===== */
+.lista-datos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.dato {
+  display: flex;
+  flex-direction: column;
+  border-left: 4px solid var(--azul);
+  padding-left: 0.9rem;
+}
+
+.dato-etiqueta {
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+
+.dato-valor {
+  font-weight: 600;
+}
+
+/* ===== 2. Biografía ===== */
+.texto {
+  max-width: 70ch;
+}
+
+.texto p + p {
+  margin-top: 1rem;
+}
+
+/* ===== 3, 4 y 5. Hobbies y deportes ===== */
+.cuadricula {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.tarjeta {
+  background: var(--fondo);
+  border-radius: 8px;
+  padding: 1.25rem;
+  border-top: 4px solid var(--azul);
+}
+
+.tarjeta-titulo {
+  margin-bottom: 0.4rem;
+  color: var(--azul-oscuro);
+}
+
+.tarjeta p {
+  color: var(--texto-suave);
+}
+
+/* ===== 6. Películas ===== */
+.lista-peliculas {
+  display: grid;
+  gap: 1rem;
+}
+
+.pelicula {
+  border: 1px solid var(--borde);
+  border-left: 6px solid var(--acento);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+}
+
+.pelicula-titulo {
+  color: var(--azul-oscuro);
+}
+
+.pelicula-detalle {
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+  margin-bottom: 0.4rem;
+}
+
+/* ===== Pie de página ===== */
+.pie {
+  text-align: center;
+  color: var(--texto-suave);
+  padding: 2rem 0;
+  font-size: 0.9rem;
+}
+
+/* ===== Móvil ===== */
+@media (max-width: 600px) {
+  .seccion {
+    padding: 1.25rem;
+  }
+  .encabezado {
+    position: static;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

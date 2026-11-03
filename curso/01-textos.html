@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HTML: estructura y textos</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="marca" href="index.html">Aula Web</a>
+      <nav aria-label="Navegación del curso"><a href="html/index.html">Curso de HTML</a></nav>
+    </div>
+  </header>
+  <main class="contenedor contenido">
+    <h1>1. Estructura y textos en HTML</h1>
+    <p class="introduccion">HTML usa etiquetas para indicar qué significa cada parte del contenido. Una etiqueta suele tener apertura, contenido y cierre.</p>
+
+    <section class="panel">
+      <h2>El documento básico</h2>
+      <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Mi página&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Hola, mundo&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      <p><code>head</code> contiene información sobre el documento. <code>body</code> contiene lo que se muestra en la página. El atributo <code>lang="es"</code> indica el idioma principal.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Títulos y párrafos</h2>
+      <p>Los títulos van de <code>h1</code> a <code>h6</code>. El número representa el nivel del título, no el tamaño que queremos dibujar. Usa un <code>h1</code> principal y organiza los subtítulos por nivel.</p>
+      <div class="demostracion">
+        <h3>Mi animal favorito</h3>
+        <h4>El gato</h4>
+        <p>Los gatos son curiosos y les gusta dormir en lugares tranquilos.</p>
+      </div>
+      <pre><code>&lt;h1&gt;Mi animal favorito&lt;/h1&gt;
+&lt;h2&gt;El gato&lt;/h2&gt;
+&lt;p&gt;Los gatos son curiosos.&lt;/p&gt;</code></pre>
+      <p>Para crear una lista, utiliza <code>ul</code> (lista sin orden) o <code>ol</code> (lista numerada), y coloca cada elemento dentro de <code>li</code>.</p>
+      <ul>
+        <li>Comida</li>
+        <li>Agua</li>
+        <li>Un lugar para descansar</li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2>Énfasis y saltos</h2>
+      <div class="demostracion">
+        <p><strong>Importante:</strong> usa <em>palabras claras</em> para explicar una idea.</p>
+        <p>La fórmula del agua es H<sub>2</sub>O y dos al cuadrado es 2<sup>2</sup>.</p>
+        <p>Primera línea<br>Segunda línea de la misma dirección.</p>
+      </div>
+      <pre><code>&lt;p&gt;&lt;strong&gt;Importante:&lt;/strong&gt; usa &lt;em&gt;palabras claras&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;H&lt;sub&gt;2&lt;/sub&gt;O y 2&lt;sup&gt;2&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;Primera línea&lt;br&gt;Segunda línea&lt;/p&gt;</code></pre>
+      <p><code>strong</code> comunica importancia y <code>em</code> énfasis. Usa <code>br</code> solo cuando el salto forma parte del contenido, como en una dirección. Para separar temas, crea otro párrafo o sección.</p>
+    </section>
+
+    <nav class="siguiente" aria-label="Siguiente lección">
+      <a href="html/index.html">← Curso de HTML</a>
+      <a href="02-estructura-navegacion.html">Siguiente: secciones y navegación →</a>
+    </nav>
+  </main>
+  <footer class="pie"><p>Lección 1 · HTML</p></footer>
+</body>
+</html>

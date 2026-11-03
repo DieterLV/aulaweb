@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HTML: enlaces, imágenes y rutas</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="marca" href="index.html">Aula Web</a>
+      <nav aria-label="Navegación del curso"><a href="html/index.html">Curso de HTML</a></nav>
+    </div>
+  </header>
+  <main class="contenedor contenido">
+    <h1>3. Enlaces, imágenes y rutas</h1>
+    <p class="introduccion">Un enlace usa <code>a</code> y un destino en <code>href</code>. Una imagen usa <code>img</code>, una ruta en <code>src</code> y una descripción en <code>alt</code>.</p>
+
+    <section class="panel">
+      <h2>Distintos destinos de enlaces</h2>
+      <div class="demostracion">
+        <p><a href="index.html">Volver al índice del curso</a></p>
+        <p><a href="../index.html">Abrir el ejemplo de textos de la carpeta principal</a></p>
+        <p><a href="mailto:estudiante@ejemplo.com">Crear un enlace de correo</a></p>
+        <p><a href="tel:+59100000000">Crear un enlace de teléfono</a></p>
+      </div>
+      <pre><code>&lt;!-- Otra página dentro de la carpeta actual --&gt;
+&lt;a href="index.html"&gt;Índice del curso&lt;/a&gt;
+
+&lt;!-- Subir un nivel de carpeta y abrir index.html --&gt;
+&lt;a href="../index.html"&gt;Página principal&lt;/a&gt;
+
+&lt;!-- Direcciones especiales --&gt;
+&lt;a href="mailto:correo@ejemplo.com"&gt;Enviar correo&lt;/a&gt;
+&lt;a href="tel:+59100000000"&gt;Llamar&lt;/a&gt;</code></pre>
+      <p>Una ruta relativa parte desde la ubicación del archivo actual. <code>imagenes/foto.jpg</code> entra a una carpeta; <code>../index.html</code> sube un nivel. Respeta los nombres y las mayúsculas de los archivos.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Mostrar una imagen</h2>
+      <figure class="demostracion">
+        <img class="imagen-demo" src="imagenes/paisaje.svg" alt="Ilustración de montañas junto a un lago">
+        <figcaption>La imagen se guarda dentro de <code>curso/imagenes/</code>.</figcaption>
+      </figure>
+      <pre><code>&lt;img src="imagenes/paisaje.svg"
+     alt="Ilustración de montañas junto a un lago"&gt;</code></pre>
+      <p><code>alt</code> describe la información importante de la imagen para quien no puede verla. Si una imagen es solo decorativa, puedes usar <code>alt=""</code>. <code>figure</code> y <code>figcaption</code> permiten agrupar una imagen con su descripción visible.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Errores comunes con rutas</h2>
+      <ul>
+        <li>Comprobar que la carpeta y el nombre del archivo existen.</li>
+        <li>Contar desde la carpeta donde está el HTML, no desde donde está CSS.</li>
+        <li>En una ruta escrita dentro de CSS, contar desde la ubicación del archivo CSS.</li>
+        <li>Evitar espacios y nombres ambiguos en los archivos; usa nombres cortos y descriptivos.</li>
+      </ul>
+    </section>
+
+    <nav class="siguiente" aria-label="Navegación entre lecciones">
+      <a href="02-estructura-navegacion.html">← Anterior: secciones</a>
+      <a href="04-formularios.html">Siguiente: formularios →</a>
+    </nav>
+  </main>
+  <footer class="pie"><p>Lección 3 · HTML</p></footer>
+</body>
+</html>

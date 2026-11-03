@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Práctica de CSS | Aula Web</title>
+  <link rel="stylesheet" href="../estilos.css">
+  <script src="../mini-laboratorios.js" defer></script>
+</head>
+<body class="pagina-practica pagina-practica-css">
+  <header class="encabezado">
+    <div class="contenedor barra-principal">
+      <a class="marca" href="../index.html"><span class="marca-icono" aria-hidden="true">&lt;/&gt;</span> Aula Web</a>
+      <nav class="nav-principal" aria-label="Navegación de la práctica">
+        <a href="index.html">Curso de CSS</a>
+        <a href="../html/index.html">Curso de HTML</a>
+        <a href="../combinado/index.html">Combinado</a>
+      </nav>
+    </div>
+  </header>
+  <main class="contenedor practica-contenido">
+    <a class="volver-curso" href="index.html"><span aria-hidden="true">←</span> Volver al curso de CSS</a>
+    <section class="mini-laboratorio" data-mini-lab data-mode="css" aria-labelledby="practica-css-titulo">
+      <div class="mini-lab-intro">
+        <span class="sobrelinea">CURSO 02 · SOLO CSS</span>
+        <h1 id="practica-css-titulo">Práctica de CSS</h1>
+        <p>El HTML ya está preparado. Edita únicamente CSS y revisa el resultado en un área amplia; la cuadrícula comienza en vista de escritorio para que las columnas se vean claramente.</p>
+      </div>
+      <div class="mini-lab-controles">
+        <label for="ejemplo-css">Ejemplo para empezar</label>
+        <select id="ejemplo-css" data-example>
+          <option value="colores">Colores, texto y bordes</option>
+          <option value="centrar">Centrar con Flexbox</option>
+          <option value="columnas">Crear columnas con Grid</option>
+        </select>
+        <button type="button" class="boton-restablecer" data-reset>Restablecer ejemplo</button>
+      </div>
+      <div class="mini-lab-disposicion">
+        <div class="mini-editor">
+          <div class="mini-editor-encabezado"><span class="punto-css"></span><strong>CSS</strong><small>estilos.css</small></div>
+          <label class="sr-only" for="editor-css">Editor de CSS</label>
+          <textarea id="editor-css" data-editor spellcheck="false" autocomplete="off" autocapitalize="off" wrap="off" aria-describedby="ayuda-css"></textarea>
+          <p class="ayuda-editor" id="ayuda-css">Cambia una propiedad, como <code>color</code> o <code>display</code>, y mira el resultado.</p>
+        </div>
+        <div class="mini-vista">
+          <div class="mini-vista-encabezado"><span class="sobrelinea">RESULTADO CSS</span><span class="estado-vista"><span class="punto-estado"></span><span data-status aria-live="polite">Lista para editar</span></span></div>
+          <iframe data-preview title="Vista previa amplia del ejercicio CSS" sandbox="" referrerpolicy="no-referrer"></iframe>
+          <p class="nota-vista">La vista ocupa el ancho disponible. En el ejemplo de columnas, Grid cambia a una columna solo cuando la ventana realmente es estrecha.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="pie"><p>Aula Web <span aria-hidden="true">·</span> Práctica de CSS</p></footer>
+</body>
+</html>

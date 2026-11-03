@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" role="img" aria-labelledby="titulo descripcion">
+  <title id="titulo">Paisaje de montañas y lago</title>
+  <desc id="descripcion">Ilustración sencilla con cielo, montañas, árboles y un lago.</desc>
+  <rect width="800" height="420" fill="#b9e2f2"/>
+  <circle cx="650" cy="85" r="44" fill="#ffd166"/>
+  <path d="M0 280 185 85l180 195z" fill="#6c8eaa"/>
+  <path d="m250 280 210-230 230 230z" fill="#54748d"/>
+  <path d="m120 155 65-70 65 70-32-12-33 16-31-16z" fill="#f3f6f8"/>
+  <path d="m390 126 70-76 75 78-40-18-35 22-34-18z" fill="#f3f6f8"/>
+  <path d="M0 278q180-36 360 0t440 0v142H0z" fill="#77b7a4"/>
+  <path d="M0 323q190-28 390 4t410-4v97H0z" fill="#4b9fc0"/>
+  <path d="M85 285 112 210l27 75zM132 285l30-91 30 91zM625 285l28-78 28 78zM672 285l32-96 32 96z" fill="#315c4d"/>
+</svg>

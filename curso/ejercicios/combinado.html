@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ejercicios de HTML y CSS | Aula Web</title>
+  <link rel="stylesheet" href="../estilos.css">
+  <script src="ejercicios.js" defer></script>
+</head>
+<body class="pagina-practica">
+  <header class="encabezado">
+    <div class="contenedor barra-principal">
+      <a class="marca" href="../index.html"><span class="marca-icono" aria-hidden="true">&lt;/&gt;</span> Aula Web</a>
+      <nav class="nav-principal" aria-label="Navegación de ejercicios"><a href="index.html">Ejercicios</a><a href="../combinado/index.html">Curso combinado</a></nav>
+    </div>
+  </header>
+  <main class="contenedor practica-contenido" data-exercise-app data-course="combinado">
+    <a class="volver-curso" href="index.html"><span aria-hidden="true">←</span> Todos los ejercicios</a>
+    <header class="cabecera-ruta cabecera-combinada">
+      <span class="sobrelinea">EJERCICIOS · HTML + CSS</span>
+      <h1>Construye y dale estilo</h1>
+      <p>Resuelve seis retos combinando HTML y CSS. El editor y el resultado usan todo el ancho para que puedas revisar tu proyecto con comodidad.</p>
+    </header>
+    <section class="panel ejercicio-panel" aria-labelledby="titulo-ejercicio">
+      <div class="ejercicio-cabecera">
+        <label for="seleccion-ejercicio">Ejercicio</label>
+        <select id="seleccion-ejercicio" data-exercise-select></select>
+        <span class="progreso-ejercicios" data-progress>Progreso guardado en este navegador</span>
+      </div>
+      <div class="reto-contenido">
+        <span class="sobrelinea" data-exercise-number>RETO 1</span>
+        <h2 id="titulo-ejercicio" data-title></h2>
+        <p data-prompt></p>
+        <ul class="requisitos-ejercicio" data-requirements></ul>
+      </div>
+      <div class="mini-lab-controles"><span>Archivos de tu página</span><button type="button" class="boton-restablecer" data-reset>Volver a empezar</button></div>
+      <div class="editores-combinados">
+        <section class="editor-ejercicio"><div class="mini-editor-encabezado"><span class="punto-html"></span><strong>HTML</strong><small>index.html</small></div><label class="sr-only" for="codigo-combinado-html">Editor HTML</label><textarea id="codigo-combinado-html" data-html-editor spellcheck="false" autocomplete="off" autocapitalize="off" wrap="off" aria-label="Editor HTML del ejercicio"></textarea><p class="ayuda-editor">Estructura y contenido</p></section>
+        <section class="editor-ejercicio"><div class="mini-editor-encabezado"><span class="punto-css"></span><strong>CSS</strong><small>estilos.css</small></div><label class="sr-only" for="codigo-combinado-css">Editor CSS</label><textarea id="codigo-combinado-css" data-css-editor spellcheck="false" autocomplete="off" autocapitalize="off" wrap="off" aria-label="Editor CSS del ejercicio"></textarea><p class="ayuda-editor">Colores, espacios y distribución</p></section>
+      </div>
+      <div class="mini-vista">
+        <div class="mini-vista-encabezado"><span class="sobrelinea">VISTA PREVIA · PÁGINA COMPLETA</span><span class="estado-vista"><span class="punto-estado"></span><span data-preview-status aria-live="polite">Lista para editar</span></span></div>
+        <iframe data-preview title="Vista previa del ejercicio combinado" sandbox="" referrerpolicy="no-referrer"></iframe>
+      </div>
+      <div class="acciones-ejercicio">
+        <button class="boton-calificar" type="button" data-check>Revisar respuesta</button>
+        <button class="boton-secundario-ejercicio" type="button" data-hint>Mostrar pista</button>
+        <button class="boton-secundario-ejercicio" type="button" data-solution>Ver solución de referencia</button>
+      </div>
+      <section class="panel-retroalimentacion" data-feedback aria-live="polite" hidden>
+        <div class="nota-ejercicio"><span>Tu nota</span><strong data-score></strong></div>
+        <div><h3>Revisión de los requisitos</h3><ul class="resultado-requisitos" data-results></ul></div>
+      </section>
+      <section class="panel-ayuda-ejercicio" data-hint-panel hidden><h3>Una pista</h3><p data-hint-text></p></section>
+      <section class="panel-solucion-ejercicio" data-solution-panel hidden><h3>Una posible solución</h3><p data-solution-explanation></p><div class="solucion-combinada"><div><h4>HTML</h4><pre><code data-solution-html></code></pre></div><div><h4>CSS</h4><pre><code data-solution-css></code></pre></div></div><button type="button" class="boton-secundario-ejercicio" data-load-solution>Cargar solución en el editor</button></section>
+    </section>
+  </main>
+  <footer class="pie"><p>Aula Web <span aria-hidden="true">·</span> Ejercicios combinados</p></footer>
+</body>
+</html>

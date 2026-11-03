@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HTML: secciones y navegación</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="marca" href="index.html">Aula Web</a>
+      <nav aria-label="Navegación del curso"><a href="html/index.html">Curso de HTML</a></nav>
+    </div>
+  </header>
+  <main class="contenedor contenido">
+    <h1>2. Secciones y navegación</h1>
+    <p class="introduccion">Las etiquetas semánticas describen la función del contenido. Ayudan a que el documento sea más fácil de entender para personas, navegadores y tecnologías de asistencia.</p>
+
+    <section class="panel">
+      <h2>Partes comunes de una página</h2>
+      <ul>
+        <li><code>header</code>: encabezado de la página o de una sección.</li>
+        <li><code>nav</code>: conjunto de enlaces para desplazarse o navegar.</li>
+        <li><code>main</code>: contenido principal; normalmente hay uno por página.</li>
+        <li><code>section</code>: grupo temático que suele tener un título.</li>
+        <li><code>article</code>: contenido independiente, como una noticia o receta.</li>
+        <li><code>footer</code>: información final, como autoría o contacto.</li>
+      </ul>
+      <pre><code>&lt;header&gt;
+  &lt;h1&gt;Mi sitio&lt;/h1&gt;
+  &lt;nav aria-label="Principal"&gt;
+    &lt;a href="#noticias"&gt;Noticias&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+  &lt;section id="noticias"&gt;
+    &lt;h2&gt;Noticias&lt;/h2&gt;
+    &lt;article&gt;
+      &lt;h3&gt;Título de una noticia&lt;/h3&gt;
+      &lt;p&gt;Contenido de la noticia.&lt;/p&gt;
+    &lt;/article&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;Fin de la página&lt;/footer&gt;</code></pre>
+    </section>
+
+    <section class="panel">
+      <h2>¿Cuándo usar div?</h2>
+      <p><code>div</code> es un contenedor genérico: agrupa elementos cuando no hay una etiqueta semántica más adecuada. No significa “caja con diseño”; el diseño se aplica después con CSS.</p>
+      <pre><code>&lt;div class="grupo-de-botones"&gt;
+  &lt;a href="registro.html"&gt;Registrarme&lt;/a&gt;
+  &lt;a href="ayuda.html"&gt;Ayuda&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+      <p>Si el contenido tiene un tema propio, prefiere <code>section</code>. Si podría entenderse por separado, considera <code>article</code>. Si solo necesitas agrupar elementos para aplicarles una clase, <code>div</code> puede ser apropiado.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Enlaces dentro de la misma página</h2>
+      <p>El valor de <code>href</code> comienza con <code>#</code> y debe coincidir con el <code>id</code> del destino.</p>
+      <div class="demostracion">
+        <p><a href="#tema-final">Ir al tema final de esta lección</a></p>
+      </div>
+      <pre><code>&lt;a href="#tema-final"&gt;Ir al tema final&lt;/a&gt;
+...
+&lt;section id="tema-final"&gt;
+  &lt;h2&gt;Tema final&lt;/h2&gt;
+&lt;/section&gt;</code></pre>
+    </section>
+
+    <section class="panel" id="tema-final">
+      <h2>Tema final</h2>
+      <p>Al hacer clic en el enlace anterior, el navegador busca el elemento que tiene <code>id="tema-final"</code>.</p>
+    </section>
+
+    <nav class="siguiente" aria-label="Navegación entre lecciones">
+      <a href="01-textos.html">← Anterior: textos</a>
+      <a href="03-enlaces-imagenes-rutas.html">Siguiente: enlaces e imágenes →</a>
+    </nav>
+  </main>
+  <footer class="pie"><p>Lección 2 · HTML</p></footer>
+</body>
+</html>

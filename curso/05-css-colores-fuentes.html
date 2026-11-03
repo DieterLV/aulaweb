@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSS: colores, fuentes y cajas</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="marca" href="index.html">Aula Web</a>
+      <nav aria-label="Navegación del curso"><a href="css/index.html">Curso de CSS</a></nav>
+    </div>
+  </header>
+  <main class="contenedor contenido">
+    <h1>5. CSS: colores, fuentes y cajas</h1>
+    <p class="introduccion">CSS aplica reglas visuales a los elementos HTML. Una regla contiene un selector y una o más declaraciones.</p>
+
+    <section class="panel">
+      <h2>Cómo se escribe una regla</h2>
+      <pre><code>p {
+  color: navy;
+  font-size: 18px;
+}</code></pre>
+      <p><code>p</code> es el selector. <code>color</code> y <code>font-size</code> son propiedades; los valores aparecen después de los dos puntos. Cada declaración termina con punto y coma.</p>
+      <p>El elemento <code>link</code> conecta el HTML con una hoja CSS externa:</p>
+      <pre><code>&lt;link rel="stylesheet" href="estilos.css"&gt;</code></pre>
+    </section>
+
+    <section class="panel">
+      <h2>Seleccionar elementos y clases</h2>
+      <pre><code>/* Selecciona todos los párrafos */
+p {
+  color: #333333;
+}
+
+/* Selecciona los elementos con class="aviso" */
+.aviso {
+  background-color: lightyellow;
+  padding: 12px;
+}</code></pre>
+      <div class="demostracion">
+        <p class="aviso">Este párrafo tiene la clase <code>aviso</code>.</p>
+      </div>
+      <p>En HTML, <code>class="aviso"</code> se escribe sin punto. En CSS, el selector de clase se escribe con punto: <code>.aviso</code>. Una misma clase puede usarse en varios elementos.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Colores y tipografía</h2>
+      <div class="demostracion">
+        <p class="muestra-color">Texto azul sobre un fondo suave.</p>
+        <p class="muestra-fuente">Una fuente distinta, más grande y en negrita.</p>
+      </div>
+      <pre><code>.muestra-color {
+  color: #174a7e;
+  background-color: #e8f1fa;
+}
+
+.muestra-fuente {
+  font-family: Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-align: center;
+}</code></pre>
+      <p>Los colores se pueden indicar con nombres, códigos hexadecimales como <code>#174a7e</code> o funciones como <code>rgb(23, 74, 126)</code>. Para fuentes, una lista de alternativas ayuda si la primera no está instalada.</p>
+      <p><code>font-size</code> cambia el tamaño; <code>font-weight</code> cambia el grosor; <code>text-align</code> alinea el texto.</p>
+    </section>
+
+    <section class="panel" id="espacio-borde">
+      <h2>Espacio, borde y caja</h2>
+      <div class="demostracion caja-demo">Contenido dentro de una caja con espacio interior, borde y separación exterior.</div>
+      <pre><code>.caja {
+  padding: 16px;       /* espacio dentro del borde */
+  border: 2px solid #174a7e;
+  margin: 16px 0;      /* espacio fuera del borde */
+  border-radius: 6px;
+}</code></pre>
+      <p><code>padding</code> separa el contenido del borde. <code>border</code> dibuja el borde. <code>margin</code> separa esta caja de otros elementos. <code>border-radius</code> redondea las esquinas.</p>
+    </section>
+
+    <nav class="siguiente" aria-label="Navegación entre lecciones">
+      <a href="css/index.html">← Curso de CSS</a>
+      <a href="06-css-display-columnas-imagenes.html">Siguiente: columnas e imágenes →</a>
+    </nav>
+  </main>
+  <footer class="pie"><p>Lección 5 · CSS</p></footer>
+</body>
+</html>

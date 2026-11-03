@@ -1,0 +1,748 @@
+const exerciseSets = {
+  html: [
+    {
+      id: "html-texto",
+      title: "Una página sobre ti",
+      prompt: "Crea una página corta de presentación. Organiza el contenido usando títulos y una lista.",
+      requirements: [
+        "Incluye un título principal con h1.",
+        "Incluye al menos un párrafo con p.",
+        "Crea una lista ul con al menos dos elementos li."
+      ],
+      hint: "Empieza con <h1>Mi nombre</h1>, luego escribe un <p> y agrupa dos <li> dentro de <ul>.",
+      html: "<main>\n  <h1>Mi primera página</h1>\n  <p>Estoy aprendiendo HTML.</p>\n</main>",
+      solutionExplanation: "Usamos h1 para el tema principal, p para el texto y ul con li para una lista sin orden.",
+      solutionHtml: "<main>\n  <h1>Sobre mí</h1>\n  <p>Me gusta aprender y crear cosas nuevas.</p>\n  <h2>Mis intereses</h2>\n  <ul>\n    <li>Lectura</li>\n    <li>Música</li>\n  </ul>\n</main>",
+      solutionCss: "",
+      check: ({ htmlDocument }) => [
+        { label: "Hay un título principal h1.", passed: htmlDocument.querySelector("h1") !== null },
+        { label: "Hay al menos un párrafo p.", passed: htmlDocument.querySelector("p") !== null },
+        { label: "Hay una lista ul con dos o más elementos li.", passed: htmlDocument.querySelectorAll("ul li").length >= 2 }
+      ]
+    },
+    {
+      id: "html-secciones",
+      title: "Navegación y secciones",
+      prompt: "Crea una navegación con un enlace interno a una sección y coloca un artículo dentro de esa sección.",
+      requirements: [
+        "Incluye nav con un enlace que empiece con #.",
+        "El destino del enlace existe como id de una sección.",
+        "La sección contiene un article con un título."
+      ],
+      hint: "Haz que href=\"#noticias\" coincida con id=\"noticias\". El article debe quedar dentro de section.",
+      html: "<header>\n  <h1>Mi sitio</h1>\n  <nav aria-label=\"Principal\">\n    <a href=\"#noticias\">Noticias</a>\n  </nav>\n</header>\n<main>\n  <section id=\"noticias\">\n    <h2>Noticias</h2>\n    <p>Contenido de la sección.</p>\n  </section>\n</main>",
+      solutionExplanation: "El enlace de navegación apunta al id de la sección. El artículo representa una pieza de contenido independiente.",
+      solutionHtml: "<header>\n  <h1>Mi sitio</h1>\n  <nav aria-label=\"Principal\"><a href=\"#noticias\">Noticias</a></nav>\n</header>\n<main>\n  <section id=\"noticias\">\n    <h2>Noticias</h2>\n    <article>\n      <h3>La biblioteca abre el sábado</h3>\n      <p>Este artículo cuenta una noticia.</p>\n    </article>\n  </section>\n</main>",
+      solutionCss: "",
+      check: ({ htmlDocument }) => {
+        const links = [...htmlDocument.querySelectorAll("nav a[href^='#']")];
+        const hasDestination = links.some((link) => htmlDocument.getElementById(link.getAttribute("href").slice(1)));
+        return [
+          { label: "Hay un nav con un enlace interno.", passed: links.length > 0 },
+          { label: "El enlace conduce a un elemento que tiene el mismo id.", passed: hasDestination },
+          { label: "Una section contiene un article con título.", passed: [...htmlDocument.querySelectorAll("section article")].some((article) => article.querySelector("h2, h3, h4, h5, h6")) }
+        ];
+      }
+    },
+    {
+      id: "html-formulario",
+      title: "Formulario de contacto",
+      prompt: "Construye un formulario con un campo para el nombre, otro para el correo y un botón para enviar.",
+      requirements: [
+        "Los campos están dentro de form.",
+        "Un label está asociado a un campo mediante for e id.",
+        "Hay un campo de correo electrónico y un botón de envío."
+      ],
+      hint: "Relaciona for=\"correo\" con id=\"correo\". El campo usa type=\"email\" y el botón type=\"submit\".",
+      html: "<form>\n  <label for=\"nombre\">Nombre</label>\n  <input id=\"nombre\" name=\"nombre\" type=\"text\">\n\n  <label for=\"correo\">Correo</label>\n  <input id=\"correo\" name=\"correo\" type=\"email\" required>\n</form>",
+      solutionExplanation: "Cada label identifica su control. El type email permite al navegador reconocer el tipo de dato y submit indica el botón de envío.",
+      solutionHtml: "<form>\n  <label for=\"nombre\">Nombre</label>\n  <input id=\"nombre\" name=\"nombre\" type=\"text\" required>\n\n  <label for=\"correo\">Correo electrónico</label>\n  <input id=\"correo\" name=\"correo\" type=\"email\" required>\n\n  <button type=\"submit\">Enviar mensaje</button>\n</form>",
+      solutionCss: "",
+      check: ({ htmlDocument }) => {
+        const labels = [...htmlDocument.querySelectorAll("form label[for]")];
+        const associatedLabel = labels.some((label) => htmlDocument.getElementById(label.htmlFor)?.closest("form"));
+        return [
+          { label: "Los campos están agrupados dentro de form.", passed: htmlDocument.querySelector("form input, form textarea") !== null },
+          { label: "Al menos un label está asociado correctamente.", passed: associatedLabel },
+          { label: "Hay un campo type=email y un botón type=submit.", passed: htmlDocument.querySelector("form input[type='email']") !== null && htmlDocument.querySelector("form button[type='submit'], form input[type='submit']") !== null }
+        ];
+      }
+    },
+    {
+      id: "html-imagen",
+      title: "Cuenta una historia con una imagen",
+      prompt: "Añade una imagen a una página y acompáñala con un texto alternativo y un pie de imagen.",
+      requirements: [
+        "La imagen tiene un atributo src y un texto alt descriptivo.",
+        "La imagen está dentro de figure.",
+        "figure contiene figcaption con una descripción."
+      ],
+      hint: "Usa <figure><img src=\"...\" alt=\"...\"> <figcaption>...</figcaption></figure>. El texto alt describe la imagen.",
+      html: "<main>\n  <h1>Un paisaje para recordar</h1>\n  <figure>\n    <img src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 320'%3E%3Crect width='640' height='320' fill='teal'/%3E%3Ccircle cx='480' cy='85' r='45' fill='gold'/%3E%3Cpath d='M0 280 180 110 320 280' fill='forestgreen'/%3E%3Cpath d='m210 280 210-180 220 180' fill='seagreen'/%3E%3C/svg%3E\" alt=\"Montañas verdes bajo un cielo azul\">\n    <figcaption>Una tarde en la montaña.</figcaption>\n  </figure>\n</main>",
+      solutionExplanation: "La etiqueta img muestra la imagen y su texto alt permite comprenderla si no se ve. figure y figcaption agrupan la imagen con su pie.",
+      solutionHtml: "<main>\n  <h1>Un paisaje para recordar</h1>\n  <figure>\n    <img src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 320'%3E%3Crect width='640' height='320' fill='teal'/%3E%3Ccircle cx='480' cy='85' r='45' fill='gold'/%3E%3Cpath d='M0 280 180 110 320 280' fill='forestgreen'/%3E%3Cpath d='m210 280 210-180 220 180' fill='seagreen'/%3E%3C/svg%3E\" alt=\"Montañas verdes bajo un cielo azul\">\n    <figcaption>Una tarde en la montaña.</figcaption>\n  </figure>\n</main>",
+      solutionCss: "",
+      check: ({ htmlDocument }) => {
+        const image = htmlDocument.querySelector("img[src][alt]");
+        return [
+          { label: "La imagen tiene src y un texto alt descriptivo.", passed: Boolean(image?.getAttribute("alt").trim()) },
+          { label: "La imagen está dentro de figure.", passed: htmlDocument.querySelector("figure img") !== null },
+          { label: "figure contiene un pie de imagen figcaption.", passed: htmlDocument.querySelector("figure figcaption") !== null }
+        ];
+      }
+    },
+    {
+      id: "html-tabla",
+      title: "Organiza un horario en una tabla",
+      prompt: "Crea una tabla sencilla para mostrar actividades de dos días. Incluye un título y encabezados para sus columnas.",
+      requirements: [
+        "La tabla tiene un caption que explica su contenido.",
+        "La tabla usa encabezados th dentro de thead.",
+        "tbody incluye al menos dos filas de actividades."
+      ],
+      hint: "Organiza la tabla con caption, thead y tbody. Cada fila usa tr y las celdas de encabezado usan th.",
+      html: "<table>\n  <caption>Mi horario de aprendizaje</caption>\n  <thead>\n    <tr><th scope=\"col\">Día</th><th scope=\"col\">Actividad</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>Lunes</td><td>Practicar HTML</td></tr>\n  </tbody>\n</table>",
+      solutionExplanation: "caption describe la tabla, thead agrupa sus encabezados y tbody contiene las filas con los datos.",
+      solutionHtml: "<table>\n  <caption>Mi horario de aprendizaje</caption>\n  <thead>\n    <tr><th scope=\"col\">Día</th><th scope=\"col\">Actividad</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>Lunes</td><td>Practicar HTML</td></tr>\n    <tr><td>Miércoles</td><td>Practicar CSS</td></tr>\n  </tbody>\n</table>",
+      solutionCss: "",
+      check: ({ htmlDocument }) => [
+        { label: "La tabla incluye un caption descriptivo.", passed: htmlDocument.querySelector("table caption") !== null },
+        { label: "Hay encabezados th dentro de thead.", passed: htmlDocument.querySelector("table thead th") !== null },
+        { label: "tbody contiene dos o más filas.", passed: htmlDocument.querySelectorAll("table tbody tr").length >= 2 }
+      ]
+    },
+    {
+      id: "html-estructura",
+      title: "Arma una página con secciones claras",
+      prompt: "Organiza una página informativa con encabezado, navegación, contenido principal, una sección identificable y pie de página.",
+      requirements: [
+        "La página usa header, nav, main y footer.",
+        "La navegación enlaza a una sección que existe.",
+        "La sección tiene un título y un párrafo."
+      ],
+      hint: "Crea <section id=\"contacto\"> y enlázala desde nav con href=\"#contacto\".",
+      html: "<header>\n  <h1>Club de lectura</h1>\n  <nav><a href=\"#contacto\">Contacto</a></nav>\n</header>\n<main>\n  <section id=\"contacto\">\n    <h2>Nos reunimos cada semana</h2>\n    <p>Ven a compartir tu próxima lectura.</p>\n  </section>\n</main>\n<footer><p>Club de lectura · 2026</p></footer>",
+      solutionExplanation: "Las etiquetas semánticas separan las partes de la página. El enlace interno permite saltar directamente a la sección de contacto.",
+      solutionHtml: "<header>\n  <h1>Club de lectura</h1>\n  <nav aria-label=\"Principal\"><a href=\"#contacto\">Contacto</a></nav>\n</header>\n<main>\n  <section id=\"contacto\">\n    <h2>Nos reunimos cada semana</h2>\n    <p>Ven a compartir tu próxima lectura.</p>\n  </section>\n</main>\n<footer><p>Club de lectura · 2026</p></footer>",
+      solutionCss: "",
+      check: ({ htmlDocument }) => {
+        const links = [...htmlDocument.querySelectorAll("nav a[href^='#']")];
+        const hasDestination = links.some((link) => htmlDocument.getElementById(link.getAttribute("href").slice(1)));
+        return [
+          { label: "La página tiene header, nav, main y footer.", passed: ["header", "nav", "main", "footer"].every((tag) => htmlDocument.querySelector(tag) !== null) },
+          { label: "La navegación apunta a una sección existente.", passed: hasDestination && htmlDocument.querySelector("main section") !== null },
+          { label: "La sección contiene un título y un párrafo.", passed: [...htmlDocument.querySelectorAll("main section")].some((section) => section.querySelector("h2, h3") && section.querySelector("p")) }
+        ];
+      }
+    }
+  ],
+  css: [
+    {
+      id: "css-apariencia",
+      title: "Dale color a una tarjeta",
+      prompt: "Personaliza la tarjeta: agrega un color de fondo, cambia el color del título y añade un borde redondeado.",
+      requirements: [
+        "La regla .tarjeta establece un color de fondo.",
+        "Una regla h1 establece el color del título.",
+        "La tarjeta tiene padding y un borde redondeado."
+      ],
+      hint: "Prueba .tarjeta { background-color: ...; padding: ...; border-radius: ...; } y luego h1 { color: ...; }.",
+      html: "<main class='tarjeta'>\n  <p class='etiqueta'>MI ESPACIO</p>\n  <h1>Mi tarjeta</h1>\n  <p>Estoy aprendiendo a personalizar una página.</p>\n</main>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n}\n\n.tarjeta {\n  max-width: 520px;\n  margin: 24px auto;\n  padding: 24px;\n  border: 2px solid #b9d8d0;\n}\n\nh1 {\n  color: #176b68;\n}",
+      solutionExplanation: "La clase .tarjeta selecciona la caja y h1 selecciona el título. Las declaraciones de espacio y borde cambian la tarjeta.",
+      solutionHtml: "<main class='tarjeta'>\n  <p class='etiqueta'>MI ESPACIO</p>\n  <h1>Mi tarjeta</h1>\n  <p>Estoy aprendiendo a personalizar una página.</p>\n</main>",
+      solutionCss: ".tarjeta {\n  padding: 24px;\n  background-color: #e2f4ee;\n  border: 2px solid #176b68;\n  border-radius: 12px;\n}\n\nh1 {\n  color: #174a7e;\n}",
+      check: ({ cssRules }) => {
+        const card = getDeclarations(cssRules, ".tarjeta");
+        const heading = getDeclarations(cssRules, "h1");
+        return [
+          { label: "La regla .tarjeta tiene background o background-color.", passed: hasDeclaration(card, ["background-color", "background"]) },
+          { label: "Una regla h1 establece color.", passed: hasDeclaration(heading, ["color"]) },
+          { label: "La tarjeta tiene padding y border-radius.", passed: hasDeclaration(card, ["padding"]) && hasDeclaration(card, ["border-radius"]) }
+        ];
+      }
+    },
+    {
+      id: "css-centrar",
+      title: "Centra una caja con Flexbox",
+      prompt: "Centra la caja dentro del escenario. Usa Flexbox y alinea el contenido tanto horizontal como verticalmente.",
+      requirements: [
+        "La regla .escenario usa display: flex.",
+        "Usa justify-content: center.",
+        "Usa align-items: center."
+      ],
+      hint: "El contenedor es .escenario. Las tres declaraciones se escriben dentro de la misma regla CSS.",
+      html: "<main class='escenario'>\n  <div class='caja'>\n    <h1>Estoy centrado</h1>\n    <p>El contenedor organiza su contenido.</p>\n  </div>\n</main>",
+      css: "body {\n  margin: 0;\n  padding: 20px;\n  font-family: Arial, sans-serif;\n  background-color: #f3f0fa;\n}\n\n.escenario {\n  display: flex;\n  min-height: 360px;\n  background-color: #e5dcf4;\n  border-radius: 12px;\n}\n\n.caja {\n  padding: 20px;\n  background-color: white;\n  border: 2px solid #9278ba;\n  border-radius: 10px;\n  text-align: center;\n}\n\nh1 {\n  color: #563b7d;\n}",
+      solutionExplanation: "Flexbox centra los elementos hijos: justify-content los distribuye en el eje principal y align-items en el eje transversal.",
+      solutionHtml: "<main class='escenario'>\n  <div class='caja'>\n    <h1>Estoy centrado</h1>\n    <p>El contenedor organiza su contenido.</p>\n  </div>\n</main>",
+      solutionCss: ".escenario {\n  display: flex;\n  min-height: 360px;\n  justify-content: center;\n  align-items: center;\n}",
+      check: ({ cssRules }) => {
+        const stage = getDeclarations(cssRules, ".escenario");
+        return [
+          { label: "La regla .escenario usa display: flex.", passed: hasValue(stage, "display", "flex") },
+          { label: "El contenido se centra horizontalmente con justify-content.", passed: hasValue(stage, "justify-content", "center") },
+          { label: "El contenido se centra verticalmente con align-items.", passed: hasValue(stage, "align-items", "center") }
+        ];
+      }
+    },
+    {
+      id: "css-columnas",
+      title: "Organiza tarjetas en columnas",
+      prompt: "Usa Grid para mostrar las tres tarjetas en dos columnas en una pantalla amplia y en una columna cuando la ventana sea estrecha.",
+      requirements: [
+        "La regla .columnas usa display: grid.",
+        "Define al menos dos columnas para pantalla amplia.",
+        "Una regla @media cambia a una columna en una pantalla estrecha."
+      ],
+      hint: "Usa grid-template-columns: repeat(2, 1fr). Para móvil, dentro de @media (max-width: 560px), cambia la regla a 1fr.",
+      html: "<main class='pagina'>\n  <h1>Mis temas favoritos</h1>\n  <div class='columnas'>\n    <article class='tarjeta'><h2>Lectura</h2><p>Una historia para descubrir.</p></article>\n    <article class='tarjeta'><h2>Música</h2><p>Una canción para recordar.</p></article>\n    <article class='tarjeta'><h2>Naturaleza</h2><p>Un lugar para explorar.</p></article>\n  </div>\n</main>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n  color: #25334a;\n  background-color: #f1f4f9;\n}\n\n.columnas {\n  display: grid;\n  grid-template-columns: 1fr;\n  gap: 16px;\n}\n\n.tarjeta {\n  padding: 18px;\n  background-color: white;\n  border: 1px solid #d9e1eb;\n  border-radius: 10px;\n}",
+      solutionExplanation: "Grid define las columnas de escritorio; la consulta de medios reemplaza el diseño por una columna en pantallas estrechas.",
+      solutionHtml: "<main class='pagina'>\n  <h1>Mis temas favoritos</h1>\n  <div class='columnas'>\n    <article class='tarjeta'><h2>Lectura</h2><p>Una historia para descubrir.</p></article>\n    <article class='tarjeta'><h2>Música</h2><p>Una canción para recordar.</p></article>\n    <article class='tarjeta'><h2>Naturaleza</h2><p>Un lugar para explorar.</p></article>\n  </div>\n</main>",
+      solutionCss: ".columnas {\n  display: grid;\n  grid-template-columns: repeat(2, 1fr);\n  gap: 16px;\n}\n\n@media (max-width: 560px) {\n  .columnas {\n    grid-template-columns: 1fr;\n  }\n}",
+      check: ({ cssRules }) => {
+        const columns = getDeclarations(cssRules, ".columnas");
+        const wideColumns = hasAtLeastColumns(columns);
+        const narrowColumns = cssRules.some((rule) =>
+          rule.media
+          && rule.media.includes("max-width")
+          && rule.selector === ".columnas"
+          && hasValue(rule.declarations, "grid-template-columns", "1fr")
+        );
+        return [
+          { label: "La regla .columnas usa display: grid.", passed: hasValue(columns, "display", "grid") },
+          { label: "El diseño amplio tiene dos o más columnas.", passed: wideColumns },
+          { label: "Una regla @media cambia la cuadrícula a una columna.", passed: narrowColumns }
+        ];
+      }
+    },
+    {
+      id: "css-tipografia",
+      title: "Haz que el texto se lea mejor",
+      prompt: "Ajusta la tipografía de la página: elige una fuente para el título y mejora el tamaño y el espaciado del párrafo.",
+      requirements: [
+        "La regla h1 define una familia tipográfica.",
+        "La regla .descripcion establece un tamaño de fuente.",
+        "El párrafo usa una altura de línea para facilitar la lectura."
+      ],
+      hint: "Usa font-family en h1 y font-size junto a line-height en .descripcion.",
+      html: "<main>\n  <h1>Ideas que crecen</h1>\n  <p class='descripcion'>Un buen texto se entiende mejor cuando la letra tiene un tamaño cómodo y suficiente espacio entre líneas.</p>\n</main>",
+      css: "body {\n  margin: 0;\n  padding: 28px;\n  color: #20243a;\n  background-color: #f5f1e7;\n}\n\nh1 {\n  color: #3448c5;\n}\n\n.descripcion {\n  max-width: 55ch;\n}",
+      solutionExplanation: "font-family cambia la familia de letras. font-size controla el tamaño y line-height separa las líneas para que el párrafo sea cómodo de leer.",
+      solutionHtml: "<main>\n  <h1>Ideas que crecen</h1>\n  <p class='descripcion'>Un buen texto se entiende mejor cuando la letra tiene un tamaño cómodo y suficiente espacio entre líneas.</p>\n</main>",
+      solutionCss: "h1 {\n  font-family: Georgia, serif;\n}\n\n.descripcion {\n  font-size: 1.15rem;\n  line-height: 1.8;\n}",
+      check: ({ cssRules }) => {
+        const heading = getDeclarations(cssRules, "h1");
+        const paragraph = getDeclarations(cssRules, ".descripcion");
+        return [
+          { label: "La regla h1 establece font-family.", passed: hasDeclaration(heading, ["font-family"]) },
+          { label: "La regla .descripcion establece font-size.", passed: hasDeclaration(paragraph, ["font-size"]) },
+          { label: "La regla .descripcion establece line-height.", passed: hasDeclaration(paragraph, ["line-height"]) }
+        ];
+      }
+    },
+    {
+      id: "css-imagen",
+      title: "Ajusta una imagen sin deformarla",
+      prompt: "Prepara la imagen para una tarjeta: define su ancho, su alto y cómo se recorta para llenar el espacio.",
+      requirements: [
+        "La regla .foto establece un ancho y un alto.",
+        "object-fit hace que la imagen llene el espacio sin deformarse.",
+        "La imagen mantiene su texto alternativo en HTML."
+      ],
+      hint: "En .foto usa width, height y object-fit: cover. La imagen del ejemplo ya tiene un atributo alt.",
+      html: "<article>\n  <h1>Un paisaje</h1>\n  <img class='foto' src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 320'%3E%3Crect width='640' height='320' fill='teal'/%3E%3Ccircle cx='480' cy='85' r='45' fill='gold'/%3E%3Cpath d='M0 280 180 110 320 280' fill='forestgreen'/%3E%3Cpath d='m210 280 210-180 220 180' fill='seagreen'/%3E%3C/svg%3E\" alt=\"Montañas verdes bajo un cielo azul\">\n</article>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n}\n\n.foto {\n  display: block;\n  border-radius: 12px;\n}",
+      solutionExplanation: "width y height definen el espacio de la imagen. object-fit: cover llena ese espacio recortando lo necesario y conserva las proporciones.",
+      solutionHtml: "<article>\n  <h1>Un paisaje</h1>\n  <img class='foto' src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 320'%3E%3Crect width='640' height='320' fill='teal'/%3E%3Ccircle cx='480' cy='85' r='45' fill='gold'/%3E%3Cpath d='M0 280 180 110 320 280' fill='forestgreen'/%3E%3Cpath d='m210 280 210-180 220 180' fill='seagreen'/%3E%3C/svg%3E\" alt=\"Montañas verdes bajo un cielo azul\">\n</article>",
+      solutionCss: ".foto {\n  width: 100%;\n  height: 240px;\n  object-fit: cover;\n  border-radius: 12px;\n}",
+      check: ({ htmlDocument, cssRules }) => {
+        const image = getDeclarations(cssRules, ".foto");
+        const alt = htmlDocument.querySelector(".foto[alt]");
+        return [
+          { label: "La regla .foto define width y height.", passed: hasDeclaration(image, ["width"]) && hasDeclaration(image, ["height"]) },
+          { label: "La imagen usa object-fit: cover.", passed: hasValue(image, "object-fit", "cover") },
+          { label: "La imagen conserva un texto alt descriptivo.", passed: Boolean(alt?.getAttribute("alt").trim()) }
+        ];
+      }
+    },
+    {
+      id: "css-menu-flex",
+      title: "Ordena un menú con Flexbox",
+      prompt: "Convierte la lista de enlaces en un menú horizontal con espacio entre cada opción.",
+      requirements: [
+        "La lista .menu usa display: flex.",
+        "Los enlaces tienen separación mediante gap.",
+        "El menú distribuye sus elementos con justify-content."
+      ],
+      hint: "En .menu escribe display: flex, gap y justify-content: space-between.",
+      html: "<nav aria-label='Secciones del curso'>\n  <ul class='menu'>\n    <li><a href='#inicio'>Inicio</a></li>\n    <li><a href='#lecciones'>Lecciones</a></li>\n    <li><a href='#contacto'>Contacto</a></li>\n  </ul>\n</nav>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n  background-color: #f5f1e7;\n}\n\n.menu {\n  margin: 0;\n  padding: 16px;\n  list-style: none;\n  background-color: #20243a;\n}\n\n.menu a {\n  color: white;\n}",
+      solutionExplanation: "display: flex coloca los elementos de la lista en una fila. gap añade espacio y justify-content distribuye el menú dentro de su ancho.",
+      solutionHtml: "<nav aria-label='Secciones del curso'>\n  <ul class='menu'>\n    <li><a href='#inicio'>Inicio</a></li>\n    <li><a href='#lecciones'>Lecciones</a></li>\n    <li><a href='#contacto'>Contacto</a></li>\n  </ul>\n</nav>",
+      solutionCss: ".menu {\n  display: flex;\n  gap: 24px;\n  justify-content: space-between;\n  margin: 0;\n  padding: 16px;\n  list-style: none;\n}",
+      check: ({ cssRules }) => {
+        const menu = getDeclarations(cssRules, ".menu");
+        return [
+          { label: "La lista .menu usa display: flex.", passed: hasValue(menu, "display", "flex") },
+          { label: "El menú añade separación con gap.", passed: hasDeclaration(menu, ["gap", "column-gap", "row-gap"]) },
+          { label: "El menú distribuye sus enlaces con justify-content.", passed: hasDeclaration(menu, ["justify-content"]) }
+        ];
+      }
+    }
+  ],
+  combinado: [
+    {
+      id: "combo-perfil",
+      title: "Crea una tarjeta de perfil",
+      prompt: "Construye una tarjeta con HTML y personalízala con CSS. La tarjeta debe tener un título, una descripción y un estilo propio.",
+      requirements: [
+        "El HTML contiene un h1 y un párrafo.",
+        "Un elemento HTML usa la clase tarjeta.",
+        "La regla .tarjeta define fondo, padding y borde redondeado."
+      ],
+      hint: "Pon class=\"tarjeta\" en un contenedor. Después selecciónalo con .tarjeta en CSS.",
+      html: "<main class='tarjeta'>\n  <p class='etiqueta'>MI PERFIL</p>\n  <h1>Hola, soy Alex</h1>\n  <p>Estoy aprendiendo a crear páginas web.</p>\n</main>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n  background-color: #edf4f3;\n}\n\n.tarjeta {\n  max-width: 520px;\n  margin: 24px auto;\n  border: 2px solid #b9d8d0;\n}\n\nh1 {\n  color: #176b68;\n}",
+      solutionExplanation: "El HTML crea la estructura y la clase tarjeta enlaza el contenido con su regla CSS.",
+      solutionHtml: "<main class='tarjeta'>\n  <h1>Hola, soy Alex</h1>\n  <p>Me gusta aprender y compartir ideas.</p>\n</main>",
+      solutionCss: ".tarjeta {\n  max-width: 520px;\n  margin: 24px auto;\n  padding: 24px;\n  background-color: #e2f4ee;\n  border: 2px solid #176b68;\n  border-radius: 12px;\n}\n\nh1 {\n  color: #174a7e;\n}",
+      check: ({ htmlDocument, cssRules }) => {
+        const card = getDeclarations(cssRules, ".tarjeta");
+        return [
+          { label: "El HTML contiene un título h1 y un párrafo.", passed: htmlDocument.querySelector("h1") !== null && htmlDocument.querySelector("p") !== null },
+          { label: "El HTML usa class=\"tarjeta\".", passed: htmlDocument.querySelector(".tarjeta") !== null },
+          { label: "La tarjeta tiene fondo, padding y borde redondeado.", passed: hasDeclaration(card, ["background-color", "background"]) && hasDeclaration(card, ["padding"]) && hasDeclaration(card, ["border-radius"]) }
+        ];
+      }
+    },
+    {
+      id: "combo-galeria",
+      title: "Diseña una galería de tarjetas",
+      prompt: "Escribe tres artículos con HTML y usa CSS Grid para distribuirlos en dos columnas en una pantalla amplia.",
+      requirements: [
+        "El HTML contiene al menos tres article.",
+        "Los article están dentro de un elemento con clase galeria.",
+        "La regla .galeria crea al menos dos columnas con Grid."
+      ],
+      hint: "Usa <div class=\"galeria\"> para agrupar los article y grid-template-columns: repeat(2, 1fr).",
+      html: "<main>\n  <h1>Mi galería</h1>\n  <div class='galeria'>\n    <article><h2>Lectura</h2><p>Una historia nueva.</p></article>\n    <article><h2>Música</h2><p>Una canción favorita.</p></article>\n    <article><h2>Naturaleza</h2><p>Un lugar para explorar.</p></article>\n  </div>\n</main>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n  background-color: #f1f4f9;\n}\n\n.galeria {\n  display: grid;\n  grid-template-columns: 1fr;\n  gap: 16px;\n}\n\n.galeria article {\n  padding: 18px;\n  background-color: #ffffff;\n  border: 1px solid #d9e1eb;\n  border-radius: 10px;\n}\n\nh2 {\n  color: #315d9b;\n}",
+      solutionExplanation: "Los article describen tarjetas independientes. La clase galeria las agrupa y Grid establece dos columnas.",
+      solutionHtml: "<main>\n  <h1>Mi galería</h1>\n  <div class='galeria'>\n    <article><h2>Lectura</h2><p>Una historia nueva.</p></article>\n    <article><h2>Música</h2><p>Una canción favorita.</p></article>\n    <article><h2>Naturaleza</h2><p>Un lugar para explorar.</p></article>\n  </div>\n</main>",
+      solutionCss: ".galeria {\n  display: grid;\n  grid-template-columns: repeat(2, minmax(0, 1fr));\n  gap: 16px;\n}\n\n.galeria article {\n  padding: 18px;\n  background-color: white;\n  border: 1px solid #d9e1eb;\n  border-radius: 10px;\n}",
+      check: ({ htmlDocument, cssRules }) => {
+        const gallery = getDeclarations(cssRules, ".galeria");
+        return [
+          { label: "El HTML contiene tres o más article.", passed: htmlDocument.querySelectorAll("article").length >= 3 },
+          { label: "Los article están dentro del elemento .galeria.", passed: htmlDocument.querySelectorAll(".galeria article").length >= 3 },
+          { label: "La regla .galeria usa Grid y define al menos dos columnas.", passed: hasValue(gallery, "display", "grid") && hasAtLeastColumns(gallery) }
+        ];
+      }
+    },
+    {
+      id: "combo-articulo",
+      title: "Publica un artículo con navegación",
+      prompt: "Crea una página con navegación interna, una sección de contenido y un artículo. Después dale estilo al artículo.",
+      requirements: [
+        "El enlace del nav apunta a una sección existente.",
+        "La sección contiene un article con un título.",
+        "La regla .articulo define padding, fondo y borde."
+      ],
+      hint: "Haz coincidir href=\"#historia\" con id=\"historia\". Añade class=\"articulo\" al article y crea la regla .articulo.",
+      html: "<header>\n  <h1>Mi revista</h1>\n  <nav><a href='#historia'>Historia</a></nav>\n</header>\n<main>\n  <section id='historias'>\n    <h2>Historias</h2>\n    <article>\n      <h3>Un día para recordar</h3>\n      <p>Escribe aquí tu historia.</p>\n    </article>\n  </section>\n</main>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n  color: #283747;\n  background-color: #f5f2eb;\n}\n\n.articulo {\n  border: 1px solid #d9d2c4;\n}\n\nh1 {\n  color: #7b4e2d;\n}",
+      solutionExplanation: "El enlace navega a una sección. El article contiene el tema independiente y su clase permite darle estilos.",
+      solutionHtml: "<header>\n  <h1>Mi revista</h1>\n  <nav><a href=\"#historia\">Historia</a></nav>\n</header>\n<main>\n  <section id=\"historia\">\n    <h2>Historias</h2>\n    <article class=\"articulo\">\n      <h3>Un día para recordar</h3>\n      <p>Escribe aquí tu historia.</p>\n    </article>\n  </section>\n</main>",
+      solutionCss: ".articulo {\n  padding: 20px;\n  background-color: #ffffff;\n  border: 1px solid #d9d2c4;\n  border-radius: 8px;\n}",
+      check: ({ htmlDocument, cssRules }) => {
+        const anchors = [...htmlDocument.querySelectorAll("nav a[href^='#']")];
+        const connectedAnchor = anchors.some((anchor) => htmlDocument.getElementById(anchor.getAttribute("href").slice(1)));
+        const article = getDeclarations(cssRules, ".articulo");
+        return [
+          { label: "El enlace de navegación apunta a un id existente.", passed: connectedAnchor },
+          { label: "Una section contiene un article con título.", passed: [...htmlDocument.querySelectorAll("section article")].some((item) => item.querySelector("h2, h3, h4, h5, h6")) },
+          { label: "La regla .articulo define padding, fondo y borde.", passed: hasDeclaration(article, ["padding"]) && hasDeclaration(article, ["background-color", "background"]) && hasDeclaration(article, ["border"]) }
+        ];
+      }
+    },
+    {
+      id: "combo-formulario",
+      title: "Diseña un formulario de contacto",
+      prompt: "Crea un formulario accesible para recibir mensajes y dale una apariencia clara usando una clase propia.",
+      requirements: [
+        "El HTML agrupa el formulario con la clase contacto.",
+        "Incluye un label asociado, un campo de correo y un botón de envío.",
+        "La regla .contacto define fondo, padding y borde redondeado."
+      ],
+      hint: "Relaciona for=\"correo\" con id=\"correo\". Agrega class=\"contacto\" al form y dale estilos a .contacto.",
+      html: "<main>\n  <h1>Escríbenos</h1>\n  <form class='contacto'>\n    <label for='correo'>Tu correo</label>\n    <input id='correo' name='correo' type='email' required>\n    <label for='mensaje'>Mensaje</label>\n    <textarea id='mensaje' name='mensaje'></textarea>\n    <button type='submit'>Enviar mensaje</button>\n  </form>\n</main>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n  background-color: #f5f1e7;\n}\n\n.contacto {\n  max-width: 520px;\n  margin: 20px auto;\n}\n\n.contacto label,\n.contacto input,\n.contacto textarea,\n.contacto button {\n  display: block;\n  width: 100%;\n  margin-bottom: 12px;\n}",
+      solutionExplanation: "Los label indican qué debe escribir cada persona. La clase contacto permite aplicar fondo, espacio interior y bordes al formulario.",
+      solutionHtml: "<main>\n  <h1>Escríbenos</h1>\n  <form class='contacto'>\n    <label for='correo'>Tu correo</label>\n    <input id='correo' name='correo' type='email' required>\n    <label for='mensaje'>Mensaje</label>\n    <textarea id='mensaje' name='mensaje'></textarea>\n    <button type='submit'>Enviar mensaje</button>\n  </form>\n</main>",
+      solutionCss: ".contacto {\n  max-width: 520px;\n  margin: 20px auto;\n  padding: 24px;\n  background-color: white;\n  border: 1px solid #d7d0c0;\n  border-radius: 12px;\n}",
+      check: ({ htmlDocument, cssRules }) => {
+        const form = getDeclarations(cssRules, ".contacto");
+        const labels = [...htmlDocument.querySelectorAll("form.contacto label[for]")];
+        const associatedLabel = labels.some((label) => htmlDocument.getElementById(label.htmlFor)?.closest("form.contacto"));
+        return [
+          { label: "El formulario utiliza la clase .contacto.", passed: htmlDocument.querySelector("form.contacto") !== null },
+          { label: "Hay un label asociado, un campo email y un botón submit.", passed: associatedLabel && htmlDocument.querySelector("form.contacto input[type='email']") !== null && htmlDocument.querySelector("form.contacto button[type='submit']") !== null },
+          { label: "La regla .contacto define fondo, padding y borde redondeado.", passed: hasDeclaration(form, ["background-color", "background"]) && hasDeclaration(form, ["padding"]) && hasDeclaration(form, ["border-radius"]) }
+        ];
+      }
+    },
+    {
+      id: "combo-galeria-fotos",
+      title: "Crea una galería visual",
+      prompt: "Construye una pequeña galería con imágenes accesibles y usa Grid para distribuirlas en dos columnas.",
+      requirements: [
+        "La galería incluye tres figuras con imagen y texto alternativo.",
+        "Cada figura tiene un pie descriptivo.",
+        "La regla .galeria usa Grid y crea al menos dos columnas."
+      ],
+      hint: "Agrupa figure dentro de <div class=\"galeria\">. Cada img necesita alt y cada figure puede incluir figcaption.",
+      html: "<main>\n  <h1>Lugares que quiero conocer</h1>\n  <div class='galeria'>\n    <figure><img src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 320'%3E%3Crect width='640' height='320' fill='teal'/%3E%3Ccircle cx='480' cy='85' r='45' fill='gold'/%3E%3Cpath d='M0 280 180 110 320 280' fill='forestgreen'/%3E%3Cpath d='m210 280 210-180 220 180' fill='seagreen'/%3E%3C/svg%3E\" alt=\"Montañas verdes bajo un cielo azul\"><figcaption>La montaña</figcaption></figure>\n    <figure><img src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 320'%3E%3Crect width='640' height='320' fill='teal'/%3E%3Ccircle cx='480' cy='85' r='45' fill='gold'/%3E%3Cpath d='M0 280 180 110 320 280' fill='forestgreen'/%3E%3Cpath d='m210 280 210-180 220 180' fill='seagreen'/%3E%3C/svg%3E\" alt=\"Un valle con árboles\"><figcaption>El valle</figcaption></figure>\n    <figure><img src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 320'%3E%3Crect width='640' height='320' fill='teal'/%3E%3Ccircle cx='480' cy='85' r='45' fill='gold'/%3E%3Cpath d='M0 280 180 110 320 280' fill='forestgreen'/%3E%3Cpath d='m210 280 210-180 220 180' fill='seagreen'/%3E%3C/svg%3E\" alt=\"Una colina al atardecer\"><figcaption>El atardecer</figcaption></figure>\n  </div>\n</main>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n  background-color: #f5f1e7;\n}\n\n.galeria {\n  display: grid;\n  grid-template-columns: 1fr;\n  gap: 16px;\n}\n\n.galeria img {\n  width: 100%;\n  height: 160px;\n  object-fit: cover;\n}",
+      solutionExplanation: "Cada figure reúne una imagen y su descripción. Grid organiza las figuras en columnas sin perder su significado ni los textos alternativos.",
+      solutionHtml: "<main>\n  <h1>Lugares que quiero conocer</h1>\n  <div class='galeria'>\n    <figure><img src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 320'%3E%3Crect width='640' height='320' fill='teal'/%3E%3Ccircle cx='480' cy='85' r='45' fill='gold'/%3E%3Cpath d='M0 280 180 110 320 280' fill='forestgreen'/%3E%3Cpath d='m210 280 210-180 220 180' fill='seagreen'/%3E%3C/svg%3E\" alt=\"Montañas verdes bajo un cielo azul\"><figcaption>La montaña</figcaption></figure>\n    <figure><img src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 320'%3E%3Crect width='640' height='320' fill='teal'/%3E%3Ccircle cx='480' cy='85' r='45' fill='gold'/%3E%3Cpath d='M0 280 180 110 320 280' fill='forestgreen'/%3E%3Cpath d='m210 280 210-180 220 180' fill='seagreen'/%3E%3C/svg%3E\" alt=\"Un valle con árboles\"><figcaption>El valle</figcaption></figure>\n    <figure><img src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 320'%3E%3Crect width='640' height='320' fill='teal'/%3E%3Ccircle cx='480' cy='85' r='45' fill='gold'/%3E%3Cpath d='M0 280 180 110 320 280' fill='forestgreen'/%3E%3Cpath d='m210 280 210-180 220 180' fill='seagreen'/%3E%3C/svg%3E\" alt=\"Una colina al atardecer\"><figcaption>El atardecer</figcaption></figure>\n  </div>\n</main>",
+      solutionCss: ".galeria {\n  display: grid;\n  grid-template-columns: repeat(2, minmax(0, 1fr));\n  gap: 16px;\n}\n\n.galeria figure {\n  margin: 0;\n  padding: 12px;\n  background-color: white;\n}\n\n.galeria img {\n  width: 100%;\n  height: 160px;\n  object-fit: cover;\n}",
+      check: ({ htmlDocument, cssRules }) => {
+        const gallery = getDeclarations(cssRules, ".galeria");
+        const figures = [...htmlDocument.querySelectorAll(".galeria figure")];
+        return [
+          { label: "La galería tiene tres imágenes con texto alt.", passed: figures.length >= 3 && figures.every((figure) => Boolean(figure.querySelector("img[alt]")?.getAttribute("alt").trim())) },
+          { label: "Cada figura incluye un pie de imagen.", passed: figures.length >= 3 && figures.every((figure) => figure.querySelector("figcaption") !== null) },
+          { label: "La regla .galeria usa Grid y define al menos dos columnas.", passed: hasValue(gallery, "display", "grid") && hasAtLeastColumns(gallery) }
+        ];
+      }
+    },
+    {
+      id: "combo-producto",
+      title: "Presenta un producto",
+      prompt: "Crea una ficha de producto con imagen, título, descripción y enlace. Después organiza sus elementos en una tarjeta.",
+      requirements: [
+        "Un article.producto contiene título, descripción e imagen con texto alt.",
+        "La regla .producto organiza la ficha con Flexbox.",
+        "La tarjeta tiene padding, fondo y borde."
+      ],
+      hint: "Usa <article class=\"producto\"> y dale display: flex, gap y estilos de tarjeta a .producto.",
+      html: "<main>\n  <article class='producto'>\n    <img src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 320'%3E%3Crect width='640' height='320' fill='teal'/%3E%3Ccircle cx='480' cy='85' r='45' fill='gold'/%3E%3Cpath d='M0 280 180 110 320 280' fill='forestgreen'/%3E%3Cpath d='m210 280 210-180 220 180' fill='seagreen'/%3E%3C/svg%3E\" alt=\"Cuaderno verde abierto sobre una mesa\">\n    <div><p>CUADERNO DE TALLER</p><h1>Ideas en papel</h1><p>Un cuaderno para dibujar, escribir y planear proyectos.</p><a href='#detalles'>Ver detalles</a></div>\n  </article>\n</main>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n  background-color: #f5f1e7;\n}\n\n.producto {\n  max-width: 760px;\n  margin: 20px auto;\n}\n\n.producto img {\n  width: 220px;\n  height: 180px;\n  object-fit: cover;\n}",
+      solutionExplanation: "El article representa una ficha completa. Flexbox coloca la imagen y la información en una fila, mientras el fondo, el padding y el borde forman la tarjeta.",
+      solutionHtml: "<main>\n  <article class='producto'>\n    <img src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 320'%3E%3Crect width='640' height='320' fill='teal'/%3E%3Ccircle cx='480' cy='85' r='45' fill='gold'/%3E%3Cpath d='M0 280 180 110 320 280' fill='forestgreen'/%3E%3Cpath d='m210 280 210-180 220 180' fill='seagreen'/%3E%3C/svg%3E\" alt=\"Cuaderno verde abierto sobre una mesa\">\n    <div><p>CUADERNO DE TALLER</p><h1>Ideas en papel</h1><p>Un cuaderno para dibujar, escribir y planear proyectos.</p><a href='#detalles'>Ver detalles</a></div>\n  </article>\n</main>",
+      solutionCss: ".producto {\n  display: flex;\n  align-items: center;\n  gap: 24px;\n  padding: 24px;\n  background-color: white;\n  border: 1px solid #d7d0c0;\n  border-radius: 12px;\n}\n\n.producto img {\n  width: 220px;\n  height: 180px;\n  object-fit: cover;\n}",
+      check: ({ htmlDocument, cssRules }) => {
+        const product = getDeclarations(cssRules, ".producto");
+        const image = htmlDocument.querySelector("article.producto img[alt]");
+        return [
+          { label: "La ficha contiene título, descripción e imagen accesible.", passed: htmlDocument.querySelector("article.producto h1, article.producto h2") !== null && htmlDocument.querySelector("article.producto p") !== null && Boolean(image?.getAttribute("alt").trim()) },
+          { label: "La regla .producto usa display: flex.", passed: hasValue(product, "display", "flex") },
+          { label: "La tarjeta define padding, fondo y borde.", passed: hasDeclaration(product, ["padding"]) && hasDeclaration(product, ["background-color", "background"]) && hasDeclaration(product, ["border"]) }
+        ];
+      }
+    }
+  ]
+};
+
+function getDeclarations(rules, selector, media = "") {
+  return rules
+    .filter((rule) => rule.selector === selector && rule.media === media)
+    .flatMap((rule) => rule.declarations);
+}
+
+function hasDeclaration(declarations, properties) {
+  return declarations.some((declaration) => properties.some((property) => {
+    if (declaration.property === property) {
+      return true;
+    }
+    if (property === "padding" || property === "background") {
+      return declaration.property.startsWith(`${property}-`);
+    }
+    if (property === "border") {
+      return /^border-(top|right|bottom|left)-/.test(declaration.property);
+    }
+    if (property === "border-radius") {
+      return /^border-(top|bottom)-(left|right)-radius$/.test(declaration.property);
+    }
+    return false;
+  }));
+}
+
+function hasValue(declarations, property, value) {
+  return declarations.some((declaration) => declaration.property === property && declaration.value.toLowerCase() === value);
+}
+
+function parseCss(css) {
+  const sheet = new CSSStyleSheet();
+  sheet.replaceSync(css);
+  const rules = [];
+
+  function collect(cssRules, media = "") {
+    [...cssRules].forEach((rule) => {
+      if (rule instanceof CSSStyleRule) {
+        rules.push({
+          selector: rule.selectorText,
+          declarations: [...rule.style].map((property) => ({
+            property,
+            value: rule.style.getPropertyValue(property).trim()
+          })),
+          media
+        });
+      } else if (rule instanceof CSSMediaRule) {
+        collect(rule.cssRules, rule.conditionText);
+      }
+    });
+  }
+
+  collect(sheet.cssRules);
+  return rules;
+}
+
+function hasAtLeastColumns(declarations) {
+  const columns = declarations.find((declaration) => declaration.property === "grid-template-columns")?.value;
+  if (!columns) {
+    return false;
+  }
+
+  const repeatMatch = columns.match(/repeat\(\s*(\d+)/i);
+  if (repeatMatch) {
+    return Number(repeatMatch[1]) >= 2;
+  }
+
+  return columns.split(/\s+/).filter((value) => value && value !== "/").length >= 2;
+}
+
+function safeParseHtml(html) {
+  const parsed = new DOMParser().parseFromString(html, "text/html");
+  parsed.querySelectorAll("script, iframe, object, embed, base").forEach((element) => element.remove());
+  parsed.querySelectorAll("*").forEach((element) => {
+    [...element.attributes].forEach((attribute) => {
+      if (attribute.name.toLowerCase().startsWith("on")) {
+        element.removeAttribute(attribute.name);
+      }
+    });
+  });
+  return parsed;
+}
+
+function initializeExerciseApp(app) {
+  const course = app.dataset.course;
+  const exercises = exerciseSets[course];
+  if (!exercises) {
+    return;
+  }
+
+  const select = app.querySelector("[data-exercise-select]");
+  const htmlEditor = app.querySelector("[data-html-editor]");
+  const cssEditor = app.querySelector("[data-css-editor]");
+  const preview = app.querySelector("[data-preview]");
+  const previewStatus = app.querySelector("[data-preview-status]");
+  const feedback = app.querySelector("[data-feedback]");
+  const hintPanel = app.querySelector("[data-hint-panel]");
+  const solutionPanel = app.querySelector("[data-solution-panel]");
+  const storageKey = `aula-web-ejercicios-${course}-v1`;
+  const savedProgress = loadProgress(storageKey);
+  let progress = savedProgress.progress;
+  let storageWarning = savedProgress.warning;
+  let timer;
+
+  exercises.forEach((exercise, index) => {
+    const option = document.createElement("option");
+    option.value = exercise.id;
+    option.textContent = `Reto ${index + 1}: ${exercise.title}`;
+    select.append(option);
+  });
+
+  function currentExercise() {
+    return exercises.find((exercise) => exercise.id === select.value) || exercises[0];
+  }
+
+  function renderProgress() {
+    const completed = exercises.filter((exercise) => progress[exercise.id]?.score === 100).length;
+    const scores = exercises.map((exercise) => progress[exercise.id]?.score).filter(Number.isFinite);
+    const average = scores.length
+      ? Math.round(scores.reduce((sum, score) => sum + score, 0) / scores.length)
+      : null;
+    const text = `${completed} de ${exercises.length} retos completos`;
+    app.querySelector("[data-progress]").textContent = `${average === null
+      ? `${text} · aún sin nota`
+      : `${text} · promedio actual: ${average}%`}${storageWarning ? ` · ${storageWarning}` : ""}`;
+  }
+
+  function renderExercise() {
+    const exercise = currentExercise();
+    const index = exercises.indexOf(exercise);
+    app.querySelector("[data-exercise-number]").textContent = `RETO ${index + 1} DE ${exercises.length}`;
+    app.querySelector("[data-title]").textContent = exercise.title;
+    app.querySelector("[data-prompt]").textContent = exercise.prompt;
+
+    const requirements = app.querySelector("[data-requirements]");
+    requirements.replaceChildren();
+    exercise.requirements.forEach((requirement) => {
+      const item = document.createElement("li");
+      item.textContent = requirement;
+      requirements.append(item);
+    });
+
+    if (htmlEditor) {
+      htmlEditor.value = exercise.html;
+    }
+    if (cssEditor) {
+      cssEditor.value = exercise.css;
+    }
+
+    feedback.hidden = true;
+    hintPanel.hidden = true;
+    solutionPanel.hidden = true;
+    app.querySelector("[data-hint-text]").textContent = exercise.hint;
+    app.querySelector("[data-solution-explanation]").textContent = exercise.solutionExplanation;
+    if (course === "combinado") {
+      app.querySelector("[data-solution-html]").textContent = exercise.solutionHtml;
+      app.querySelector("[data-solution-css]").textContent = exercise.solutionCss;
+    } else {
+      app.querySelector("[data-solution-code]").textContent = course === "html" ? exercise.solutionHtml : exercise.solutionCss;
+    }
+
+    updatePreview();
+    renderProgress();
+  }
+
+  function updatePreview() {
+    const styles = cssEditor ? cssEditor.value.replace(/<\/style/gi, "<\\/style") : "";
+    const sourceHtml = htmlEditor ? htmlEditor.value : currentExercise().html;
+    const html = safeParseHtml(sourceHtml).body.innerHTML;
+    previewStatus.textContent = "Actualizando…";
+    preview.srcdoc = `<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data: blob:; font-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <style>
+    body { margin: 0; padding: 28px; color: #263746; background: #fff; font-family: Arial, sans-serif; line-height: 1.6; }
+    img { max-width: 100%; height: auto; }
+    input, textarea, select, button { max-width: 100%; font: inherit; }
+    ${styles}
+  </style>
+</head>
+<body>${html}</body>
+</html>`;
+  }
+
+  function schedulePreview() {
+    previewStatus.textContent = "Actualizando…";
+    window.clearTimeout(timer);
+    timer = window.setTimeout(updatePreview, 220);
+  }
+
+  function reviewAnswer() {
+    const exercise = currentExercise();
+    let checks;
+
+    try {
+      const sourceHtml = htmlEditor ? htmlEditor.value : exercise.html;
+      const htmlDocument = safeParseHtml(sourceHtml);
+      const cssRules = cssEditor ? parseCss(cssEditor.value) : [];
+      checks = exercise.check({ htmlDocument, cssRules });
+    } catch (error) {
+      feedback.hidden = false;
+      app.querySelector("[data-score]").textContent = "—";
+      const results = app.querySelector("[data-results]");
+      results.replaceChildren();
+      const item = document.createElement("li");
+      item.className = "requisito-fallido";
+      item.textContent = "No se pudo revisar el CSS. Comprueba que las llaves y los puntos y coma estén completos.";
+      results.append(item);
+      return;
+    }
+
+    const score = Math.round(checks.filter((check) => check.passed).length / checks.length * 100);
+    progress[exercise.id] = { score };
+    if (!saveProgress(storageKey, progress)) {
+      storageWarning = "el progreso no se pudo guardar en este navegador";
+    }
+
+    const results = app.querySelector("[data-results]");
+    results.replaceChildren();
+    checks.forEach((check) => {
+      const item = document.createElement("li");
+      item.className = check.passed ? "requisito-cumplido" : "requisito-fallido";
+      item.textContent = `${check.passed ? "✓" : "○"} ${check.label}`;
+      results.append(item);
+    });
+
+    const scoreLabel = score === 100 ? "¡Excelente!" : score > 0 ? "Buen avance" : "Sigue intentando";
+    app.querySelector("[data-score]").textContent = `${score}% · ${scoreLabel}`;
+    feedback.hidden = false;
+    renderProgress();
+  }
+
+  app.querySelector("[data-reset]").addEventListener("click", renderExercise);
+  app.querySelector("[data-check]").addEventListener("click", reviewAnswer);
+  app.querySelector("[data-hint]").addEventListener("click", () => {
+    hintPanel.hidden = !hintPanel.hidden;
+  });
+  app.querySelector("[data-solution]").addEventListener("click", () => {
+    solutionPanel.hidden = !solutionPanel.hidden;
+  });
+  app.querySelector("[data-load-solution]").addEventListener("click", () => {
+    const exercise = currentExercise();
+    if (htmlEditor) {
+      htmlEditor.value = exercise.solutionHtml;
+    }
+    if (cssEditor) {
+      cssEditor.value = exercise.solutionCss;
+    }
+    feedback.hidden = true;
+    updatePreview();
+  });
+  select.addEventListener("change", renderExercise);
+  htmlEditor?.addEventListener("input", schedulePreview);
+  cssEditor?.addEventListener("input", schedulePreview);
+
+  [htmlEditor, cssEditor].filter(Boolean).forEach((editor) => {
+    editor.addEventListener("keydown", (event) => {
+      if (event.key !== "Tab") {
+        return;
+      }
+      event.preventDefault();
+      editor.setRangeText("  ", editor.selectionStart, editor.selectionEnd, "end");
+      schedulePreview();
+    });
+  });
+
+  preview.addEventListener("load", () => {
+    previewStatus.textContent = "Vista actualizada";
+  });
+
+  renderExercise();
+}
+
+function loadProgress(key) {
+  try {
+    const saved = localStorage.getItem(key);
+    const progress = saved ? JSON.parse(saved) : {};
+    return {
+      progress: progress && typeof progress === "object" && !Array.isArray(progress) ? progress : {},
+      warning: ""
+    };
+  } catch {
+    return {
+      progress: {},
+      warning: "no se pudo leer el progreso guardado"
+    };
+  }
+}
+
+function saveProgress(key, progress) {
+  try {
+    localStorage.setItem(key, JSON.stringify(progress));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+document.querySelectorAll("[data-exercise-app]").forEach(initializeExerciseApp);

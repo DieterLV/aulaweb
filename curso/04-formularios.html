@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HTML: formularios</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="marca" href="index.html">Aula Web</a>
+      <nav aria-label="Navegación del curso"><a href="html/index.html">Curso de HTML</a></nav>
+    </div>
+  </header>
+  <main class="contenedor contenido">
+    <h1>4. Formularios</h1>
+    <p class="introduccion">Los formularios permiten pedir información. HTML crea los campos y sus etiquetas; CSS puede cambiar su apariencia.</p>
+
+    <section class="panel">
+      <h2>Ejemplo para probar</h2>
+      <p>Este formulario es una demostración local: no guarda ni envía datos a un servidor. No ingreses información privada.</p>
+      <form class="formulario-demo" action="#" method="get">
+        <label for="nombre">Nombre
+          <input id="nombre" name="nombre" type="text" autocomplete="name" required>
+        </label>
+        <label for="correo">Correo electrónico
+          <input id="correo" name="correo" type="email" autocomplete="email" required>
+        </label>
+        <label for="tema">Tema
+          <select id="tema" name="tema">
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+          </select>
+        </label>
+        <label for="mensaje">Mensaje
+          <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+        </label>
+        <button type="submit">Probar envío</button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>Partes del formulario</h2>
+      <pre><code>&lt;form action="/contacto" method="post"&gt;
+  &lt;label for="correo"&gt;Correo&lt;/label&gt;
+  &lt;input id="correo" name="correo" type="email" required&gt;
+
+  &lt;label for="mensaje"&gt;Mensaje&lt;/label&gt;
+  &lt;textarea id="mensaje" name="mensaje"&gt;&lt;/textarea&gt;
+
+  &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+      <ul>
+        <li><code>form</code> agrupa los campos. <code>action</code> indica dónde se procesarían; <code>method</code> indica cómo se envían.</li>
+        <li><code>label</code> nombra un campo. Su <code>for</code> debe coincidir con el <code>id</code> del control.</li>
+        <li><code>name</code> identifica el dato que se enviaría al servidor.</li>
+        <li><code>required</code> pide al navegador que compruebe que el campo no esté vacío.</li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2>Tipos de campos</h2>
+      <ul>
+        <li><code>type="text"</code>: texto corto.</li>
+        <li><code>type="email"</code>: dirección de correo.</li>
+        <li><code>type="number"</code>: número.</li>
+        <li><code>type="date"</code>: fecha.</li>
+        <li><code>type="checkbox"</code>: opción que se puede activar o desactivar.</li>
+        <li><code>type="radio"</code>: una opción entre varias que comparten el mismo <code>name</code>.</li>
+        <li><code>select</code> y <code>option</code>: menú de opciones.</li>
+        <li><code>textarea</code>: texto de varias líneas.</li>
+      </ul>
+      <p>Un formulario real necesita un servidor o servicio que reciba y procese los datos. HTML por sí solo no los guarda.</p>
+    </section>
+
+    <nav class="siguiente" aria-label="Navegación entre lecciones">
+      <a href="03-enlaces-imagenes-rutas.html">← Anterior: enlaces e imágenes</a>
+      <a href="css/index.html">Siguiente: empieza el curso de CSS →</a>
+    </nav>
+  </main>
+  <footer class="pie"><p>Lección 4 · HTML</p></footer>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSS: display, columnas e imágenes</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="marca" href="index.html">Aula Web</a>
+      <nav aria-label="Navegación del curso"><a href="css/index.html">Curso de CSS</a></nav>
+    </div>
+  </header>
+  <main class="contenedor contenido">
+    <h1>6. CSS: display, columnas e imágenes</h1>
+    <p class="introduccion">La propiedad <code>display</code> cambia cómo se colocan los elementos. Flexbox y Grid son herramientas nativas de CSS para organizar contenido en filas y columnas.</p>
+
+    <section class="panel">
+      <h2>Block, inline e inline-block</h2>
+      <div class="demostracion">
+        <span class="muestra-block">Elemento block: empieza en una línea nueva.</span>
+        <span class="muestra-inline">Inline 1</span>
+        <span class="muestra-inline">Inline 2</span>
+        <span class="muestra-inline-block">Inline-block con ancho</span>
+      </div>
+      <pre><code>.block { display: block; }
+.inline { display: inline; }
+.inline-block { display: inline-block; width: 180px; }</code></pre>
+      <p><code>block</code> normalmente ocupa el ancho disponible y empieza en otra línea. <code>inline</code> comparte la línea con el texto. <code>inline-block</code> se coloca en línea, pero permite definir ancho y alto.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Flexbox: organizar elementos en una fila</h2>
+      <div class="demostracion muestra-flex">
+        <div class="elemento-demo">Uno</div>
+        <div class="elemento-demo">Dos</div>
+        <div class="elemento-demo">Tres</div>
+      </div>
+      <pre><code>.fila {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}</code></pre>
+      <p>Flexbox resulta útil para alinear elementos en una dirección, como enlaces de navegación, botones o una fila de tarjetas. <code>gap</code> deja espacio entre elementos y <code>flex-wrap</code> permite que bajen a otra línea si falta espacio.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Centrar una caja</h2>
+      <p>Para centrar horizontalmente una caja con un ancho definido, puedes usar <code>margin-inline: auto</code>. El elemento conserva su propio ancho y los márgenes izquierdo y derecho se reparten por igual.</p>
+      <div class="demostracion">
+        <div class="caja-centrada-demo">Esta caja está centrada.</div>
+      </div>
+      <pre><code>.caja-centrada {
+  width: min(100%, 320px);
+  margin-inline: auto;
+}</code></pre>
+      <p>Para centrar los elementos que están dentro de un contenedor, usa Flexbox: <code>display: flex; justify-content: center; align-items: center;</code>. La primera propiedad centra en el eje principal (horizontal por defecto); la segunda en el eje transversal.</p>
+      <div class="demostracion centro-flex-demo">
+        <span>Contenido centrado con Flexbox</span>
+      </div>
+      <pre><code>.contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 120px;
+}</code></pre>
+      <p>Estos métodos no hacen lo mismo: <code>margin-inline: auto</code> centra una caja en su espacio disponible; Flexbox alinea los elementos hijos dentro de un contenedor.</p>
+    </section>
+
+    <section class="panel" id="grid-columnas">
+      <h2>Grid: crear columnas</h2>
+      <div class="demostracion muestra-grid">
+        <div class="elemento-demo">Columna 1</div>
+        <div class="elemento-demo">Columna 2</div>
+        <div class="elemento-demo">Otra fila 1</div>
+        <div class="elemento-demo">Otra fila 2</div>
+      </div>
+      <pre><code>.columnas {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .columnas {
+    grid-template-columns: 1fr;
+  }
+}</code></pre>
+      <p><code>grid-template-columns</code> define las columnas. <code>1fr</code> significa una parte del espacio disponible. La regla <code>@media</code> cambia el diseño en pantallas pequeñas; así las dos columnas pasan a una.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Imágenes con HTML y CSS</h2>
+      <figure class="demostracion">
+        <img class="imagen-adaptable" src="imagenes/paisaje.svg" alt="Montañas, árboles y un lago">
+        <figcaption>La imagen se adapta al ancho de su contenedor.</figcaption>
+      </figure>
+      <pre><code>img {
+  max-width: 100%;
+  height: auto;
+}</code></pre>
+      <p>Usa <code>img</code> cuando la imagen comunica algo y añade un <code>alt</code> adecuado. Para una imagen decorativa que forma parte del diseño, CSS puede usar <code>background-image</code>; no reemplaza el texto alternativo de una imagen informativa.</p>
+      <div class="demostracion fondo-imagen-demo" role="img" aria-label="Ilustración decorativa de montañas"></div>
+      <pre><code>.fondo {
+  background-image: url("imagenes/paisaje.svg");
+  background-size: cover;
+  background-position: center;
+}</code></pre>
+      <p>La ruta de <code>url()</code> se calcula desde el archivo CSS, no desde el HTML.</p>
+    </section>
+
+    <nav class="siguiente" aria-label="Navegación entre lecciones">
+      <a href="05-css-colores-fuentes.html">← Anterior: colores y fuentes</a>
+      <a href="combinado/index.html">Siguiente: combina HTML y CSS →</a>
+    </nav>
+  </main>
+  <footer class="pie"><p>Lección 6 · CSS</p></footer>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Curso combinado HTML y CSS | Aula Web</title>
+  <link rel="stylesheet" href="../estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor barra-principal">
+      <a class="marca" href="../index.html"><span class="marca-icono" aria-hidden="true">&lt;/&gt;</span> Aula Web</a>
+      <nav class="nav-principal" aria-label="Navegación del curso"><a href="../ejercicios/combinado.html">Ejercicios</a><a href="../index.html">Todos los cursos</a></nav>
+    </div>
+  </header>
+  <main class="contenedor pagina-ruta">
+    <a class="volver-curso" href="../index.html"><span aria-hidden="true">←</span> Todos los cursos</a>
+    <header class="cabecera-ruta cabecera-combinada">
+      <span class="sobrelinea">CURSO 03 · HTML + CSS</span>
+      <h1>Ahora, construye una página completa</h1>
+      <p>Ya conoces la estructura con HTML y la presentación con CSS. En esta ruta aprenderás cómo trabajan juntos y practicarás cada cambio en un editor interactivo.</p>
+      <p class="nota-ruta">Recomendado después de los cursos introductorios de HTML y CSS. No necesitas instalar nada.</p>
+    </header>
+
+    <section class="panel panel-ruta">
+      <h2>La idea clave: contenido y presentación</h2>
+      <p>HTML describe qué es cada parte. CSS selecciona esas partes y define cómo se ven. Una clase conecta ambos lenguajes: se escribe en el atributo <code>class</code> del HTML y se selecciona con un punto en CSS.</p>
+      <div class="comparacion-codigo">
+        <div><h3>HTML · qué contiene</h3><pre><code>&lt;article class="tarjeta"&gt;
+  &lt;h2&gt;Mi proyecto&lt;/h2&gt;
+  &lt;p&gt;Estoy aprendiendo.&lt;/p&gt;
+&lt;/article&gt;</code></pre></div>
+        <div><h3>CSS · cómo se presenta</h3><pre><code>.tarjeta {
+  padding: 1rem;
+  background-color: #e2f4ee;
+  border-radius: 8px;
+}</code></pre></div>
+      </div>
+      <p>El navegador lee el HTML, encuentra el elemento <code>class="tarjeta"</code> y le aplica las reglas que coinciden con <code>.tarjeta</code>.</p>
+    </section>
+
+    <section class="panel panel-ruta">
+      <h2>Ruta de práctica</h2>
+      <ol class="pasos-combinados">
+        <li><span class="numero-paso">1</span><p><strong>Elige una base.</strong> Empieza con una tarjeta, un artículo o una cuadrícula.</p></li>
+        <li><span class="numero-paso">2</span><p><strong>Modifica el HTML.</strong> Cambia el título, agrega párrafos o crea una sección.</p></li>
+        <li><span class="numero-paso">3</span><p><strong>Modifica el CSS.</strong> Cambia colores, bordes, espacios o columnas.</p></li>
+        <li><span class="numero-paso">4</span><p><strong>Compara el resultado.</strong> La vista previa muestra los cambios y puedes volver a cargar el ejemplo cuando quieras.</p></li>
+      </ol>
+      <a class="boton-principal" href="../laboratorio.html">Abrir el laboratorio interactivo <span aria-hidden="true">→</span></a>
+    </section>
+    <aside class="llamada-siguiente">
+      <div><span class="sobrelinea">¿YA PRACTICASTE?</span><h2>Resuelve retos combinados</h2><p>Construye una página, revisa los requisitos y consulta pistas o una solución.</p></div>
+      <a class="boton-principal" href="../ejercicios/combinado.html">Ir a los ejercicios <span aria-hidden="true">→</span></a>
+    </aside>
+
+    <aside class="nota-curso">
+      <span class="nota-icono" aria-hidden="true">i</span>
+      <p>El laboratorio está pensado para experimentar con HTML y CSS. La vista previa está aislada y no ejecuta JavaScript introducido en el editor.</p>
+    </aside>
+  </main>
+  <footer class="pie"><p>Aula Web <span aria-hidden="true">·</span> HTML + CSS</p></footer>
+</body>
+</html>
