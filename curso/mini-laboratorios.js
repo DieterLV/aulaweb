@@ -55,6 +55,33 @@ const htmlExamples = {
     <button type="button">Enviar</button>
   </form>
 </main>`
+  },
+  accesibilidad: {
+    html: `<header>
+  <h1>Club de lectura</h1>
+  <nav aria-label="Navegación principal">
+    <a href="#libro">Libro del mes</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+</header>
+<main>
+  <section id="libro">
+    <h2>Libro del mes</h2>
+    <figure>
+      <img src="../imagenes/paisaje.svg" alt="Montañas verdes junto a un lago">
+      <figcaption>Una historia para conversar.</figcaption>
+    </figure>
+  </section>
+  <section id="contacto">
+    <h2>Contacto</h2>
+    <form>
+      <label for="correo">Correo electrónico</label>
+      <input id="correo" name="correo" type="email" required>
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+</main>
+<footer><p>Club de lectura</p></footer>`
   }
 };
 
@@ -177,6 +204,112 @@ h2 {
 
 @media (max-width: 560px) {
   .columnas {
+    grid-template-columns: 1fr;
+  }
+}`
+  },
+  cascada: {
+    html: `<main>
+  <h1>La cascada de estilos</h1>
+  <p id="aviso" class="aviso">Este texto tiene dos selectores en competencia.</p>
+  <p class="nota">Prueba qué pasa si quitas el selector de id.</p>
+</main>`,
+    css: `body {
+  margin: 0;
+  padding: 24px;
+  font-family: Arial, sans-serif;
+}
+
+#aviso {
+  color: #a83232;
+}
+
+.aviso {
+  padding: 16px;
+  color: #245c45;
+  background-color: #e4f2dc;
+}
+
+.nota {
+  color: #444;
+}`
+  },
+  caja: {
+    html: `<main>
+  <h1>Calcula el tamaño de la caja</h1>
+  <div class="caja">
+    <strong>Una caja predecible</strong>
+    <p>El ancho incluye contenido, padding y borde.</p>
+  </div>
+</main>`,
+    css: `* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 24px;
+  font-family: Arial, sans-serif;
+  background-color: #f5f1e7;
+}
+
+.caja {
+  width: 100%;
+  max-width: 420px;
+  padding: 24px;
+  border: 4px solid #3448c5;
+  background-color: white;
+}`
+  },
+  adaptable: {
+    html: `<main>
+  <h1>Una página para cada pantalla</h1>
+  <nav class="menu" aria-label="Navegación principal">
+    <a href="#inicio">Inicio</a>
+    <a href="#lecciones">Lecciones</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+  <section class="tarjetas">
+    <article><h2>HTML</h2><p>Estructura el contenido.</p></article>
+    <article><h2>CSS</h2><p>Presenta los elementos.</p></article>
+    <article><h2>Práctica</h2><p>Prueba cada cambio.</p></article>
+  </section>
+</main>`,
+    css: `body {
+  margin: 0;
+  padding: 24px;
+  font-family: Arial, sans-serif;
+}
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px;
+  background-color: #20243a;
+}
+
+.menu a {
+  color: white;
+  padding: 8px;
+}
+
+.menu a:hover,
+.menu a:focus-visible {
+  color: #20243a;
+  background-color: #f0c65e;
+  outline: 3px solid #e85d3f;
+}
+
+.tarjetas {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+@media (max-width: 700px) {
+  .tarjetas {
     grid-template-columns: 1fr;
   }
 }`

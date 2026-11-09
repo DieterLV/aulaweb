@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HTML avanzado: semántica y accesibilidad</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="marca" href="index.html">Aula Web</a>
+      <nav aria-label="Navegación del curso"><a href="html/index.html">Curso de HTML</a></nav>
+    </div>
+  </header>
+  <main class="contenedor contenido">
+    <h1>7. HTML: semántica y accesibilidad</h1>
+    <p class="introduccion">HTML semántico explica el propósito de cada parte de una página. Una estructura clara ayuda a estudiantes, navegadores y tecnologías de asistencia a entender el contenido.</p>
+
+    <section class="panel">
+      <h2>Elige la etiqueta por su significado</h2>
+      <p>Usa <code>header</code> para la introducción de una página o sección; <code>nav</code> para un grupo de enlaces de navegación; <code>main</code> para el contenido principal; <code>section</code> para un tema con encabezado; <code>article</code> para contenido que tiene sentido por sí solo; y <code>footer</code> para información final.</p>
+      <pre><code>&lt;header&gt;
+  &lt;h1&gt;Club de lectura&lt;/h1&gt;
+  &lt;nav aria-label="Principal"&gt;
+    &lt;a href="#libro"&gt;Libro del mes&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+  &lt;section id="libro"&gt;
+    &lt;h2&gt;Libro del mes&lt;/h2&gt;
+    &lt;article&gt;
+      &lt;h3&gt;Una historia para conversar&lt;/h3&gt;
+      &lt;p&gt;Nos reunimos cada jueves.&lt;/p&gt;
+    &lt;/article&gt;
+  &lt;/section&gt;
+&lt;/main&gt;</code></pre>
+      <p>No elijas una etiqueta solo por su apariencia. Por ejemplo, <code>section</code> agrupa un tema; <code>div</code> es un contenedor neutro cuando no hay una etiqueta semántica adecuada.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Imágenes que comunican</h2>
+      <p>En una imagen informativa, <code>alt</code> debe describir la información importante, no comenzar con “imagen de”. Si una imagen es puramente decorativa y no aporta información, usa <code>alt=""</code>.</p>
+      <figure class="demostracion">
+        <img class="imagen-adaptable" src="imagenes/paisaje.svg" alt="Montañas verdes junto a un lago">
+        <figcaption><code>figure</code> agrupa la imagen y <code>figcaption</code> aporta un pie visible.</figcaption>
+      </figure>
+      <pre><code>&lt;figure&gt;
+  &lt;img src="paisaje.svg" alt="Montañas verdes junto a un lago"&gt;
+  &lt;figcaption&gt;Un paisaje de la región.&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+    </section>
+
+    <section class="panel">
+      <h2>Formularios comprensibles</h2>
+      <p>Un <code>label</code> asociado permite identificar cada campo. El valor de <code>for</code> debe coincidir con el <code>id</code> del control. El atributo <code>required</code> comunica que el campo es obligatorio.</p>
+      <div class="demostracion">
+        <form>
+          <label for="correo-demo">Correo electrónico</label>
+          <input id="correo-demo" name="correo" type="email" required>
+          <button type="button">Ejemplo de botón</button>
+        </form>
+      </div>
+      <pre><code>&lt;label for="correo"&gt;Correo electrónico&lt;/label&gt;
+&lt;input id="correo" name="correo" type="email" required&gt;</code></pre>
+      <p>El texto visible de la etiqueta ayuda a todas las personas. No dependas solamente de <code>placeholder</code> para explicar un campo.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Revisa el orden de los encabezados</h2>
+      <p>Organiza los títulos según la jerarquía del contenido: un título principal con <code>h1</code>, subtítulos con <code>h2</code> y apartados internos con <code>h3</code>. No saltes niveles solo para cambiar el tamaño visual.</p>
+      <p>Comprueba además que los enlaces describan su destino y que cada enlace interno apunte a un <code>id</code> existente.</p>
+    </section>
+
+    <aside class="llamada-siguiente">
+      <div><span class="sobrelinea">PRACTICA LO APRENDIDO</span><h2>Repara una página para todos</h2><p>Practica estructura semántica, enlaces y textos alternativos con evaluación y pistas.</p></div>
+      <a class="boton-principal" href="ejercicios/html.html">Resolver retos de HTML <span aria-hidden="true">→</span></a>
+    </aside>
+    <nav class="siguiente" aria-label="Navegación entre lecciones">
+      <a href="html/index.html">← Curso de HTML</a>
+      <a href="css/index.html">Siguiente: curso de CSS →</a>
+    </nav>
+  </main>
+  <footer class="pie"><p>Lección avanzada · HTML</p></footer>
+</body>
+</html>

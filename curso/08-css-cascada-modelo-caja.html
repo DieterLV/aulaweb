@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSS avanzado: cascada y modelo de caja</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="marca" href="index.html">Aula Web</a>
+      <nav aria-label="Navegación del curso"><a href="css/index.html">Curso de CSS</a></nav>
+    </div>
+  </header>
+  <main class="contenedor contenido">
+    <h1>8. CSS: cascada y modelo de caja</h1>
+    <p class="introduccion">Cuando un estilo no aparece como esperabas, revisa qué reglas coinciden, cuál tiene mayor especificidad y cuánto mide la caja.</p>
+
+    <section class="panel">
+      <h2>La cascada decide qué regla gana</h2>
+      <p>Si varias reglas asignan la misma propiedad al mismo elemento, CSS compara su importancia y especificidad; cuando empatan, normalmente gana la que aparece después. Evita resolver todos los conflictos añadiendo <code>!important</code>: busca primero qué selector está causando la competencia.</p>
+      <pre><code>p { color: #333; }          /* selector de elemento */
+.aviso { color: darkgreen; } /* selector de clase */
+#principal { color: navy; }  /* selector de id */</code></pre>
+      <p>Un selector de id suele tener más especificidad que uno de clase, y uno de clase más que uno de elemento. Escribe selectores sencillos y reutilizables para que sea fácil saber por qué se aplica un estilo.</p>
+      <div class="demostracion">
+        <p id="aviso-cascada" class="aviso-cascada">Este texto coincide con el selector de id y el de clase.</p>
+      </div>
+      <pre><code>#aviso-cascada { color: firebrick; }
+.aviso-cascada { color: darkgreen; }</code></pre>
+      <p>Prueba el ejemplo en la práctica CSS: cambia o quita una regla y observa cuál deja de ganar.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Las partes de una caja</h2>
+      <p>Una caja se compone de contenido, <code>padding</code> (espacio interior), <code>border</code> (borde) y <code>margin</code> (espacio exterior). Con <code>content-box</code>, el ancho declarado corresponde solo al contenido y el padding y el borde se suman.</p>
+      <pre><code>.caja {
+  width: 320px;
+  padding: 24px;
+  border: 4px solid navy;
+  box-sizing: border-box;
+}</code></pre>
+      <p><code>box-sizing: border-box</code> hace que el ancho declarado incluya el contenido, el padding y el borde. Aplicarlo de forma consistente ayuda a evitar desbordamientos:</p>
+      <pre><code>* {
+  box-sizing: border-box;
+}</code></pre>
+      <div class="demostracion caja-modelo-demo"><strong>El ancho exterior no supera el contenedor.</strong><p>Prueba a cambiar el padding y el borde en el editor.</p></div>
+    </section>
+
+    <section class="panel">
+      <h2>Un método para investigar estilos</h2>
+      <ol>
+        <li>Comprueba que el selector coincide con el elemento.</li>
+        <li>Busca otra regla que declare la misma propiedad.</li>
+        <li>Compara especificidad y orden de las reglas.</li>
+        <li>Revisa el modelo de caja si el tamaño o el espacio no coincide.</li>
+      </ol>
+    </section>
+
+    <aside class="llamada-siguiente">
+      <div><span class="sobrelinea">PRUEBA, CAMBIA Y OBSERVA</span><h2>Explora cascada y cajas</h2><p>Elige un ejemplo, edita CSS y observa el resultado en vivo.</p></div>
+      <a class="boton-principal" href="css/practica.html">Abrir la práctica CSS <span aria-hidden="true">→</span></a>
+    </aside>
+    <p class="ejemplos-previos">Cuando termines el ejemplo, <a href="ejercicios/css.html">resuelve los retos calificados de CSS</a>.</p>
+    <nav class="siguiente" aria-label="Navegación entre lecciones">
+      <a href="06-css-display-columnas-imagenes.html">← Display, columnas e imágenes</a>
+      <a href="09-css-adaptable-estados.html">Siguiente: adaptable e interacción →</a>
+    </nav>
+  </main>
+  <footer class="pie"><p>Lección avanzada · CSS</p></footer>
+</body>
+</html>

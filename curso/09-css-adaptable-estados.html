@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSS avanzado: diseño adaptable y estados</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="marca" href="index.html">Aula Web</a>
+      <nav aria-label="Navegación del curso"><a href="css/index.html">Curso de CSS</a></nav>
+    </div>
+  </header>
+  <main class="contenedor contenido">
+    <h1>9. CSS: diseño adaptable y estados</h1>
+    <p class="introduccion">Un diseño adaptable reorganiza el contenido según el espacio disponible. Los estados de interacción deben ser claros tanto con el ratón como con el teclado.</p>
+
+    <section class="panel">
+      <h2>Empieza por un diseño flexible</h2>
+      <p>Usa anchos máximos, medidas relativas y cuadrículas flexibles para que el contenido pueda ajustarse. <code>minmax()</code> limita el tamaño de las columnas; <code>auto-fit</code> permite crear tantas columnas como quepan.</p>
+      <pre><code>.tarjetas {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}</code></pre>
+      <p>Una consulta de medios aplica reglas cuando se cumple una condición, como un ancho máximo. El punto de cambio debe responder al contenido, no a un modelo específico de teléfono.</p>
+      <pre><code>@media (max-width: 640px) {
+  .menu {
+    flex-direction: column;
+  }
+}</code></pre>
+    </section>
+
+    <section class="panel">
+      <h2>Estados para ratón y teclado</h2>
+      <p><code>:hover</code> indica que el puntero está sobre un elemento. <code>:focus-visible</code> muestra el foco cuando una persona navega con el teclado. No quites el contorno sin ofrecer una señal visible equivalente.</p>
+      <div class="demostracion">
+        <nav class="menu-estados-demo" aria-label="Ejemplo de navegación">
+          <a href="#inicio">Inicio</a>
+          <a href="#lecciones">Lecciones</a>
+          <a href="#contacto">Contacto</a>
+        </nav>
+      </div>
+      <pre><code>.menu a:hover,
+.menu a:focus-visible {
+  color: #20243a;
+  background-color: #f0c65e;
+  outline: 3px solid #e85d3f;
+  outline-offset: 2px;
+}</code></pre>
+      <p>Prueba estos enlaces con el ratón y con la tecla Tab. Ambos modos deben permitir identificar qué elemento está activo.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Comprueba diferentes anchos</h2>
+      <ol>
+        <li>Empieza con el contenido y las columnas.</li>
+        <li>Reduce el ancho de la vista previa poco a poco.</li>
+        <li>Busca desbordamientos y decide cuándo reorganizar los elementos.</li>
+        <li>Usa la consulta de medios más pequeña que mantenga el contenido legible.</li>
+      </ol>
+      <p>En la práctica CSS, elige “Diseño adaptable y foco” para modificar el menú y las tarjetas.</p>
+    </section>
+
+    <aside class="llamada-siguiente">
+      <div><span class="sobrelinea">PRACTICA EN VARIAS PANTALLAS</span><h2>Haz que el diseño responda</h2><p>Ajusta columnas y prueba que los enlaces se puedan recorrer con el teclado.</p></div>
+      <a class="boton-principal" href="css/practica.html">Abrir la práctica CSS <span aria-hidden="true">→</span></a>
+    </aside>
+    <p class="ejemplos-previos">Después de probar el diseño, <a href="ejercicios/css.html">practica con retos de CSS y revisa tus resultados</a>.</p>
+    <nav class="siguiente" aria-label="Navegación entre lecciones">
+      <a href="08-css-cascada-modelo-caja.html">← Cascada y modelo de caja</a>
+      <a href="combinado/index.html">Siguiente: proyecto combinado →</a>
+    </nav>
+  </main>
+  <footer class="pie"><p>Lección avanzada · CSS</p></footer>
+</body>
+</html>

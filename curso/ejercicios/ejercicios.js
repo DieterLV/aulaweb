@@ -134,6 +134,29 @@ const exerciseSets = {
           { label: "La sección contiene un título y un párrafo.", passed: [...htmlDocument.querySelectorAll("main section")].some((section) => section.querySelector("h2, h3") && section.querySelector("p")) }
         ];
       }
+    },
+    {
+      id: "html-accesibilidad",
+      title: "Haz una página más accesible",
+      prompt: "Mejora la página para que las imágenes, la navegación y el formulario tengan nombres claros y relaciones correctas.",
+      requirements: [
+        "La navegación tiene un nombre accesible con aria-label.",
+        "La imagen informativa tiene un texto alt descriptivo.",
+        "El label del correo está asociado al campo por for e id."
+      ],
+      hint: "Añade aria-label al nav, describe la imagen con alt y haz coincidir for=\"correo\" con id=\"correo\".",
+      html: "<header>\n  <h1>Huerto escolar</h1>\n  <nav>\n    <a href=\"#proyecto\">El proyecto</a>\n  </nav>\n</header>\n<main>\n  <section id=\"proyecto\">\n    <h2>Cultivamos juntos</h2>\n    <img src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 50'%3E%3Crect width='80' height='50' fill='seagreen'/%3E%3C/svg%3E\">\n    <p>Aprendemos a cuidar las plantas.</p>\n  </section>\n  <form>\n    <label>Tu correo</label>\n    <input id=\"correo\" name=\"correo\" type=\"email\">\n  </form>\n</main>",
+      solutionExplanation: "aria-label da un nombre a la navegación. alt comunica el propósito de la imagen. Un label conectado con for e id identifica el campo del formulario.",
+      solutionHtml: "<header>\n  <h1>Huerto escolar</h1>\n  <nav aria-label=\"Navegación principal\">\n    <a href=\"#proyecto\">El proyecto</a>\n  </nav>\n</header>\n<main>\n  <section id=\"proyecto\">\n    <h2>Cultivamos juntos</h2>\n    <img src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 50'%3E%3Crect width='80' height='50' fill='seagreen'/%3E%3C/svg%3E\" alt=\"Plantas jóvenes creciendo en el huerto escolar\">\n    <p>Aprendemos a cuidar las plantas.</p>\n  </section>\n  <form>\n    <label for=\"correo\">Tu correo</label>\n    <input id=\"correo\" name=\"correo\" type=\"email\" required>\n  </form>\n</main>",
+      solutionCss: "",
+      check: ({ htmlDocument }) => {
+        const label = htmlDocument.querySelector("form label[for='correo']");
+        return [
+          { label: "nav tiene un nombre accesible con aria-label.", passed: Boolean(htmlDocument.querySelector("nav[aria-label]")?.getAttribute("aria-label").trim()) },
+          { label: "La imagen tiene un texto alternativo descriptivo.", passed: Boolean(htmlDocument.querySelector("img[src][alt]")?.getAttribute("alt").trim()) },
+          { label: "El label está asociado al campo de correo.", passed: Boolean(label && htmlDocument.querySelector("form input#correo[type='email']")) }
+        ];
+      }
     }
   ],
   css: [
@@ -290,6 +313,105 @@ const exerciseSets = {
           { label: "El menú distribuye sus enlaces con justify-content.", passed: hasDeclaration(menu, ["justify-content"]) }
         ];
       }
+    },
+    {
+      id: "css-especificidad",
+      title: "Resuelve un conflicto de estilos",
+      prompt: "El selector por id está ganando al de clase. Simplifica la regla para que el aviso use los colores definidos en .aviso.",
+      requirements: [
+        "La regla .aviso establece un color de texto.",
+        "La regla .aviso establece un color de fondo.",
+        "Se eliminó la regla #aviso que tenía mayor especificidad."
+      ],
+      hint: "Quita la regla #aviso y conserva las declaraciones de color y background-color en .aviso.",
+      html: "<main>\n  <h1>Revisa las reglas</h1>\n  <p id='aviso' class='aviso'>El selector de id tiene prioridad sobre la clase.</p>\n</main>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n}\n\n#aviso {\n  color: #a83232;\n}\n\n.aviso {\n  padding: 16px;\n  background-color: #e4f2dc;\n}",
+      solutionExplanation: "Los selectores de id tienen mayor especificidad que los de clase. Al quitar la regla de id, la clase puede controlar ambos colores.",
+      solutionHtml: "<main>\n  <h1>Revisa las reglas</h1>\n  <p id='aviso' class='aviso'>El selector de id tiene prioridad sobre la clase.</p>\n</main>",
+      solutionCss: ".aviso {\n  padding: 16px;\n  color: #245c45;\n  background-color: #e4f2dc;\n}",
+      check: ({ cssRules }) => {
+        const notice = getDeclarations(cssRules, ".aviso");
+        return [
+          { label: "La clase .aviso establece el color del texto.", passed: hasDeclaration(notice, ["color"]) },
+          { label: "La clase .aviso establece el color de fondo.", passed: hasDeclaration(notice, ["background-color", "background"]) },
+          { label: "Se quitó la regla #aviso de mayor especificidad.", passed: getDeclarations(cssRules, "#aviso").length === 0 }
+        ];
+      }
+    },
+    {
+      id: "css-modelo-caja",
+      title: "Haz predecible el ancho de una tarjeta",
+      prompt: "La caja se desborda al sumar padding y borde. Configura border-box y limita su ancho al espacio disponible.",
+      requirements: [
+        "El selector universal usa box-sizing: border-box.",
+        "La tarjeta tiene un ancho y un padding.",
+        "La tarjeta tiene un max-width que limita su tamaño."
+      ],
+      hint: "Añade * { box-sizing: border-box; } y define width: 100%, max-width y padding en .tarjeta.",
+      html: "<main>\n  <h1>Modelo de caja</h1>\n  <article class='tarjeta'>\n    <h2>Una tarjeta adaptable</h2>\n    <p>Su borde y espacio interior se cuentan dentro del ancho declarado.</p>\n  </article>\n</main>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n}\n\n.tarjeta {\n  width: 500px;\n  padding: 30px;\n  border: 5px solid #3448c5;\n  background-color: #f5f1e7;\n}",
+      solutionExplanation: "Con box-sizing: border-box, width incluye contenido, padding y borde. width: 100% y max-width permiten que la tarjeta se reduzca en contenedores estrechos.",
+      solutionHtml: "<main>\n  <h1>Modelo de caja</h1>\n  <article class='tarjeta'>\n    <h2>Una tarjeta adaptable</h2>\n    <p>Su borde y espacio interior se cuentan dentro del ancho declarado.</p>\n  </article>\n</main>",
+      solutionCss: "* {\n  box-sizing: border-box;\n}\n\n.tarjeta {\n  width: 100%;\n  max-width: 500px;\n  padding: 30px;\n  border: 5px solid #3448c5;\n  background-color: #f5f1e7;\n}",
+      check: ({ cssRules }) => {
+        const allElements = getDeclarations(cssRules, "*");
+        const card = getDeclarations(cssRules, ".tarjeta");
+        return [
+          { label: "El selector universal define box-sizing: border-box.", passed: hasValue(allElements, "box-sizing", "border-box") },
+          { label: "La tarjeta define width y padding.", passed: hasDeclaration(card, ["width"]) && hasDeclaration(card, ["padding"]) },
+          { label: "La tarjeta limita su ancho con max-width.", passed: hasDeclaration(card, ["max-width"]) }
+        ];
+      }
+    },
+    {
+      id: "css-adaptable",
+      title: "Adapta una cuadrícula a móvil",
+      prompt: "Muestra las tarjetas en dos columnas cuando hay espacio y cambia a una columna en pantallas estrechas.",
+      requirements: [
+        "La regla .tarjetas usa display: grid.",
+        "El diseño inicial define al menos dos columnas.",
+        "Una consulta @media cambia a una columna."
+      ],
+      hint: "Define grid-template-columns en .tarjetas y vuelve a definirlo como 1fr dentro de @media (max-width: 640px).",
+      html: "<main>\n  <h1>Club de ciencias</h1>\n  <div class='tarjetas'>\n    <article><h2>Explorar</h2><p>Observamos el mundo.</p></article>\n    <article><h2>Probar</h2><p>Hacemos experimentos.</p></article>\n  </div>\n</main>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n}\n\n.tarjetas {\n  display: grid;\n  gap: 16px;\n}\n\n.tarjetas article {\n  padding: 18px;\n  border: 1px solid #d7d0c0;\n  background-color: #f5f1e7;\n}",
+      solutionExplanation: "Grid define las columnas para el espacio amplio. La consulta de medios reemplaza la plantilla por una columna en pantallas angostas.",
+      solutionHtml: "<main>\n  <h1>Club de ciencias</h1>\n  <div class='tarjetas'>\n    <article><h2>Explorar</h2><p>Observamos el mundo.</p></article>\n    <article><h2>Probar</h2><p>Hacemos experimentos.</p></article>\n  </div>\n</main>",
+      solutionCss: ".tarjetas {\n  display: grid;\n  grid-template-columns: repeat(2, minmax(0, 1fr));\n  gap: 16px;\n}\n\n@media (max-width: 640px) {\n  .tarjetas {\n    grid-template-columns: 1fr;\n  }\n}",
+      check: ({ cssRules }) => {
+        const grid = getDeclarations(cssRules, ".tarjetas");
+        const narrow = cssRules.some((rule) => rule.media && rule.media.includes("max-width") && rule.selector === ".tarjetas" && hasValue(rule.declarations, "grid-template-columns", "1fr"));
+        return [
+          { label: "La regla .tarjetas usa display: grid.", passed: hasValue(grid, "display", "grid") },
+          { label: "El diseño amplio tiene dos o más columnas.", passed: hasAtLeastColumns(grid) },
+          { label: "Una regla @media cambia a una columna.", passed: narrow }
+        ];
+      }
+    },
+    {
+      id: "css-foco-visible",
+      title: "Haz visible el foco del teclado",
+      prompt: "Mejora los enlaces para que tengan un estado al pasar el ratón y un indicador visible cuando se navega con teclado.",
+      requirements: [
+        "Los enlaces tienen un estilo :hover.",
+        "Los enlaces tienen un estilo :focus-visible.",
+        "El foco incluye un contorno visible."
+      ],
+      hint: "Crea las reglas .menu a:hover y .menu a:focus-visible. En la segunda, usa outline con un grosor visible.",
+      html: "<nav class='menu' aria-label='Navegación principal'>\n  <a href='#inicio'>Inicio</a>\n  <a href='#lecciones'>Lecciones</a>\n  <a href='#contacto'>Contacto</a>\n</nav>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n}\n\n.menu {\n  display: flex;\n  gap: 12px;\n  padding: 16px;\n  background-color: #20243a;\n}\n\n.menu a {\n  padding: 8px;\n  color: white;\n}",
+      solutionExplanation: ":hover permite reconocer la posición del ratón. :focus-visible muestra el enlace activo al recorrer con teclado; outline dibuja un indicador que no cambia el tamaño de la caja.",
+      solutionHtml: "<nav class='menu' aria-label='Navegación principal'>\n  <a href='#inicio'>Inicio</a>\n  <a href='#lecciones'>Lecciones</a>\n  <a href='#contacto'>Contacto</a>\n</nav>",
+      solutionCss: ".menu a:hover {\n  color: #20243a;\n  background-color: #f0c65e;\n}\n\n.menu a:focus-visible {\n  outline: 3px solid #e85d3f;\n  outline-offset: 2px;\n}",
+      check: ({ cssRules }) => {
+        const hover = getDeclarations(cssRules, ".menu a:hover");
+        const focus = getDeclarations(cssRules, ".menu a:focus-visible");
+        return [
+          { label: "Hay un estilo para :hover.", passed: hover.length > 0 },
+          { label: "Hay un estilo para :focus-visible.", passed: focus.length > 0 },
+          { label: "El foco tiene un contorno visible.", passed: hasDeclaration(focus, ["outline", "outline-color", "outline-style", "outline-width"]) }
+        ];
+      }
     }
   ],
   combinado: [
@@ -440,6 +562,36 @@ const exerciseSets = {
           { label: "La ficha contiene título, descripción e imagen accesible.", passed: htmlDocument.querySelector("article.producto h1, article.producto h2") !== null && htmlDocument.querySelector("article.producto p") !== null && Boolean(image?.getAttribute("alt").trim()) },
           { label: "La regla .producto usa display: flex.", passed: hasValue(product, "display", "flex") },
           { label: "La tarjeta define padding, fondo y borde.", passed: hasDeclaration(product, ["padding"]) && hasDeclaration(product, ["background-color", "background"]) && hasDeclaration(product, ["border"]) }
+        ];
+      }
+    },
+    {
+      id: "combo-proyecto",
+      title: "Proyecto final: portal de una biblioteca",
+      prompt: "Construye un pequeño portal de biblioteca que combine navegación semántica, artículos accesibles, variables CSS y una cuadrícula adaptable.",
+      requirements: [
+        "La navegación apunta a una sección existente y tiene un nombre accesible.",
+        "La sección contiene dos artículos con títulos e imágenes con alt.",
+        "CSS usa una variable de color y una cuadrícula que cambia a una columna en móvil."
+      ],
+      hint: "Usa nav aria-label, section id, dos article con img alt, :root con --color-acento y .coleccion con Grid y una consulta @media.",
+      html: "<header>\n  <h1>Biblioteca del barrio</h1>\n  <nav><a href=\"#recomendados\">Libros recomendados</a></nav>\n</header>\n<main>\n  <section id=\"recomendados\">\n    <h2>Lecturas de la semana</h2>\n    <div class=\"coleccion\">\n      <article><img src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 50'%3E%3Crect width='80' height='50' fill='sienna'/%3E%3C/svg%3E\"><h3>El jardín secreto</h3><p>Una historia para descubrir.</p></article>\n      <article><img src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 50'%3E%3Crect width='80' height='50' fill='steelblue'/%3E%3C/svg%3E\"><h3>Viaje a las estrellas</h3><p>Una aventura para imaginar.</p></article>\n    </div>\n  </section>\n</main>\n<footer><p>Biblioteca del barrio</p></footer>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n}\n\n.coleccion {\n  display: grid;\n  gap: 16px;\n}\n\n.coleccion article {\n  padding: 16px;\n  border: 1px solid #d7d0c0;\n}\n\n.coleccion img {\n  width: 100%;\n  height: 140px;\n  object-fit: cover;\n}",
+      solutionExplanation: "La navegación accesible conecta con la sección. Los article contienen libros independientes y sus imágenes se describen con alt. La variable guarda un color reutilizable y Grid se adapta al ancho de pantalla.",
+      solutionHtml: "<header>\n  <h1>Biblioteca del barrio</h1>\n  <nav aria-label=\"Navegación principal\"><a href=\"#recomendados\">Libros recomendados</a></nav>\n</header>\n<main>\n  <section id=\"recomendados\">\n    <h2>Lecturas de la semana</h2>\n    <div class=\"coleccion\">\n      <article><img src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 50'%3E%3Crect width='80' height='50' fill='sienna'/%3E%3C/svg%3E\" alt=\"Portada color marrón del libro El jardín secreto\"><h3>El jardín secreto</h3><p>Una historia para descubrir.</p></article>\n      <article><img src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 50'%3E%3Crect width='80' height='50' fill='steelblue'/%3E%3C/svg%3E\" alt=\"Portada azul del libro Viaje a las estrellas\"><h3>Viaje a las estrellas</h3><p>Una aventura para imaginar.</p></article>\n    </div>\n  </section>\n</main>\n<footer><p>Biblioteca del barrio</p></footer>",
+      solutionCss: ":root {\n  --color-acento: #3448c5;\n}\n\n.coleccion {\n  display: grid;\n  grid-template-columns: repeat(2, minmax(0, 1fr));\n  gap: 16px;\n}\n\n.coleccion article {\n  padding: 16px;\n  color: var(--color-acento);\n  border: 1px solid #d7d0c0;\n}\n\n@media (max-width: 640px) {\n  .coleccion {\n    grid-template-columns: 1fr;\n  }\n}",
+      check: ({ htmlDocument, cssRules }) => {
+        const nav = htmlDocument.querySelector("nav[aria-label]");
+        const links = [...htmlDocument.querySelectorAll("nav a[href^='#']")];
+        const hasDestination = links.some((link) => htmlDocument.getElementById(link.getAttribute("href").slice(1)));
+        const articles = [...htmlDocument.querySelectorAll("#recomendados .coleccion article")];
+        const variables = getDeclarations(cssRules, ":root");
+        const collection = getDeclarations(cssRules, ".coleccion");
+        const mobileColumns = cssRules.some((rule) => rule.media && rule.media.includes("max-width") && rule.selector === ".coleccion" && hasValue(rule.declarations, "grid-template-columns", "1fr"));
+        return [
+          { label: "La navegación tiene nombre accesible y apunta a una sección.", passed: Boolean(nav?.getAttribute("aria-label").trim()) && hasDestination },
+          { label: "Hay dos artículos con título e imagen con texto alternativo.", passed: articles.length >= 2 && articles.every((article) => article.querySelector("h3") && Boolean(article.querySelector("img[alt]")?.getAttribute("alt").trim())) },
+          { label: "CSS define una variable, Grid y una columna para móvil.", passed: variables.some((declaration) => declaration.property.startsWith("--")) && hasValue(collection, "display", "grid") && hasAtLeastColumns(collection) && mobileColumns }
         ];
       }
     }

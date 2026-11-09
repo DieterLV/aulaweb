@@ -2784,3 +2784,38 @@ button:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
+
+.aviso-cascada {
+  padding: 1rem;
+  color: #245c45;
+  background: #e4f2dc;
+  border-left: 4px solid #397260;
+}
+
+.caja-modelo-demo {
+  width: 100%;
+  max-width: 420px;
+  margin-inline: auto;
+  border: 4px solid var(--azul-taller);
+}
+
+.menu-estados-demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.menu-estados-demo a {
+  padding: 0.65rem 0.9rem;
+  color: var(--papel-claro);
+  background: var(--tinta);
+  text-decoration: none;
+}
+
+.menu-estados-demo a:hover,
+.menu-estados-demo a:focus-visible {
+  color: var(--tinta);
+  background: #f0c65e;
+  outline: 3px solid var(--coral-taller);
+  outline-offset: 2px;
+}
