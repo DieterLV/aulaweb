@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Aprende a validar formularios y presentar audio y video accesibles con HTML.">
+  <title>HTML avanzado: formularios y multimedia</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="marca" href="index.html">Aula Web</a>
+      <nav aria-label="Navegación del curso"><a href="html/index.html">Curso de HTML</a></nav>
+    </div>
+  </header>
+  <main class="contenedor contenido">
+    <h1>10. HTML: formularios y multimedia</h1>
+    <p class="introduccion">HTML puede comprobar algunos datos antes de enviar un formulario y mostrar audio o video con controles del navegador. La validación no reemplaza la comprobación que debe realizar un servidor.</p>
+
+    <section class="panel">
+      <h2>Validación nativa del navegador</h2>
+      <p>Combina el tipo de campo con atributos que describen lo que se espera. El navegador reconoce correos con <code>type="email"</code>, campos obligatorios con <code>required</code> y límites numéricos con <code>min</code> y <code>max</code>.</p>
+      <div class="demostracion">
+        <form>
+          <fieldset>
+            <legend>Inscripción al taller</legend>
+            <label for="correo-taller">Correo electrónico</label>
+            <input id="correo-taller" name="correo" type="email" required>
+            <label for="edad-taller">Edad (12 a 99)</label>
+            <input id="edad-taller" name="edad" type="number" min="12" max="99" required>
+            <button type="button">Ejemplo de botón</button>
+          </fieldset>
+        </form>
+      </div>
+      <pre><code>&lt;label for="edad"&gt;Edad&lt;/label&gt;
+&lt;input id="edad" name="edad"
+       type="number" min="12" max="99" required&gt;</code></pre>
+      <p>Agrupa opciones relacionadas con <code>fieldset</code> y nómbralas con <code>legend</code>. Cada control debe tener una etiqueta asociada mediante <code>for</code> e <code>id</code>.</p>
+      <p>Para opciones, crea un <code>select</code> con una primera opción vacía y requerida; el navegador puede impedir el envío hasta que se elija una alternativa.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Audio y video con alternativas</h2>
+      <p><code>controls</code> muestra controles de reproducción. Añade un nombre accesible y una alternativa escrita cuando el medio sea importante; para video con diálogo o información sonora, proporciona subtítulos con <code>track</code>.</p>
+      <pre><code>&lt;video controls aria-label="Video: cómo plantar una semilla"&gt;
+  &lt;source src="plantar-semilla.mp4" type="video/mp4"&gt;
+  &lt;track kind="captions" src="subtitulos-es.vtt"
+         srclang="es" label="Español"&gt;
+  Tu navegador no puede reproducir este video.
+&lt;/video&gt;</code></pre>
+      <p>Los archivos de audio, video y subtítulos deben existir en las rutas indicadas. El texto alternativo entre las etiquetas ayuda si el navegador no puede reproducir el archivo.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Información útil en el encabezado del documento</h2>
+      <p>El <code>title</code> da un nombre a la página y la descripción ayuda a resumir su contenido. El atributo <code>lang</code> en <code>html</code> indica el idioma del documento; <code>viewport</code> permite presentar correctamente el diseño en dispositivos estrechos.</p>
+      <pre><code>&lt;html lang="es"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport"
+        content="width=device-width, initial-scale=1"&gt;
+  &lt;meta name="description"
+        content="Descripción breve de la página."&gt;
+  &lt;title&gt;Mi proyecto&lt;/title&gt;
+&lt;/head&gt;</code></pre>
+    </section>
+
+    <aside class="llamada-siguiente">
+      <div><span class="sobrelinea">PRACTICA FORMULARIOS REALES</span><h2>Valida una inscripción</h2><p>Prueba fieldset, límites numéricos, correo y controles multimedia con retos y soluciones.</p></div>
+      <a class="boton-principal" href="ejercicios/html.html">Resolver retos de HTML <span aria-hidden="true">→</span></a>
+    </aside>
+    <nav class="siguiente" aria-label="Navegación entre lecciones">
+      <a href="07-html-accesibilidad.html">← Semántica y accesibilidad</a>
+      <a href="html/practica.html">Abrir el editor de HTML →</a>
+    </nav>
+  </main>
+  <footer class="pie"><p>Lección avanzada · HTML</p></footer>
+</body>
+</html>

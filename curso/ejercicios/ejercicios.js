@@ -157,6 +157,71 @@ const exerciseSets = {
           { label: "El label está asociado al campo de correo.", passed: Boolean(label && htmlDocument.querySelector("form input#correo[type='email']")) }
         ];
       }
+    },
+    {
+      id: "html-formulario-validado",
+      title: "Valida una inscripción",
+      prompt: "Construye un formulario accesible para inscribirse a un taller. Agrupa los datos y utiliza validación HTML nativa.",
+      requirements: [
+        "El formulario agrupa sus opciones con fieldset y legend.",
+        "El correo tiene label asociado, type email y required.",
+        "El campo de edad establece límites con min y max."
+      ],
+      hint: "Usa fieldset y legend. Para el correo, combina for/id con type=\"email\" y required; en edad, añade min y max.",
+      html: "<form>\n  <fieldset>\n    <legend>Inscripción al taller</legend>\n    <label>Correo electrónico</label>\n    <input id=\"correo\" name=\"correo\" type=\"email\">\n    <label for=\"edad\">Edad</label>\n    <input id=\"edad\" name=\"edad\" type=\"number\">\n    <button type=\"submit\">Inscribirme</button>\n  </fieldset>\n</form>",
+      solutionExplanation: "fieldset y legend agrupan y nombran controles relacionados. type, required, min y max permiten que el navegador aplique validación básica sin JavaScript.",
+      solutionHtml: "<form>\n  <fieldset>\n    <legend>Inscripción al taller</legend>\n    <label for=\"correo\">Correo electrónico</label>\n    <input id=\"correo\" name=\"correo\" type=\"email\" required>\n    <label for=\"edad\">Edad</label>\n    <input id=\"edad\" name=\"edad\" type=\"number\" min=\"12\" max=\"99\" required>\n    <button type=\"submit\">Inscribirme</button>\n  </fieldset>\n</form>",
+      solutionCss: "",
+      check: ({ htmlDocument }) => {
+        const email = htmlDocument.querySelector("form input#correo[type='email']");
+        const age = htmlDocument.querySelector("form input#edad[type='number']");
+        const label = htmlDocument.querySelector("form label[for='correo']");
+        return [
+          { label: "El formulario contiene fieldset con legend.", passed: htmlDocument.querySelector("form fieldset legend") !== null },
+          { label: "El correo tiene label asociado, type=email y required.", passed: Boolean(email?.required && label && label.htmlFor === email.id) },
+          { label: "La edad tiene límites min y max.", passed: Boolean(age?.hasAttribute("min") && age?.hasAttribute("max")) }
+        ];
+      }
+    },
+    {
+      id: "html-tabla-accesible",
+      title: "Aclara los encabezados de una tabla",
+      prompt: "Repara una tabla de resultados: agrega un título y especifica qué encabezados describen columnas y cuáles identifican filas.",
+      requirements: [
+        "La tabla tiene un caption descriptivo.",
+        "Los encabezados de columna tienen scope=\"col\".",
+        "Los encabezados de fila tienen scope=\"row\"."
+      ],
+      hint: "Pon <caption> antes de thead. En los th usa scope=\"col\" para Día y scope=\"row\" para cada nombre.",
+      html: "<table>\n  <thead>\n    <tr><th>Día</th><th>Actividad</th></tr>\n  </thead>\n  <tbody>\n    <tr><th>Lunes</th><td>HTML</td></tr>\n    <tr><th>Miércoles</th><td>CSS</td></tr>\n  </tbody>\n</table>",
+      solutionExplanation: "caption nombra la tabla. scope=\"col\" asocia un encabezado con su columna, y scope=\"row\" con su fila, lo que ayuda a interpretar los datos.",
+      solutionHtml: "<table>\n  <caption>Actividades del taller</caption>\n  <thead>\n    <tr><th scope=\"col\">Día</th><th scope=\"col\">Actividad</th></tr>\n  </thead>\n  <tbody>\n    <tr><th scope=\"row\">Lunes</th><td>HTML</td></tr>\n    <tr><th scope=\"row\">Miércoles</th><td>CSS</td></tr>\n  </tbody>\n</table>",
+      solutionCss: "",
+      check: ({ htmlDocument }) => [
+        { label: "La tabla tiene un caption descriptivo.", passed: htmlDocument.querySelector("table caption") !== null },
+        { label: "Los encabezados de thead especifican scope=col.", passed: htmlDocument.querySelectorAll("table thead th[scope='col']").length >= 2 },
+        { label: "Los encabezados de fila especifican scope=row.", passed: htmlDocument.querySelectorAll("table tbody th[scope='row']").length >= 2 }
+      ]
+    },
+    {
+      id: "html-multimedia",
+      title: "Añade audio y video con controles",
+      prompt: "Completa una página de medios para que las personas puedan controlar la reproducción y encontrar subtítulos en el video.",
+      requirements: [
+        "El audio tiene controles y un nombre accesible.",
+        "El video tiene controles y un nombre accesible.",
+        "El video ofrece una pista de subtítulos con kind=\"captions\"."
+      ],
+      hint: "Añade controls y aria-label a audio y video. Dentro del video incluye <track kind=\"captions\" srclang=\"es\" label=\"Español\">.",
+      html: "<main>\n  <h1>Sonidos del huerto</h1>\n  <audio>\n    <source src=\"sonidos-huerto.mp3\" type=\"audio/mpeg\">\n  </audio>\n  <h2>Cómo plantar una semilla</h2>\n  <video>\n    <source src=\"plantar-semilla.mp4\" type=\"video/mp4\">\n  </video>\n</main>",
+      solutionExplanation: "Los controles nativos permiten pausar y ajustar la reproducción. El texto alternativo accesible nombra cada reproductor, y track ofrece subtítulos seleccionables.",
+      solutionHtml: "<main>\n  <h1>Sonidos del huerto</h1>\n  <audio controls aria-label=\"Audio: sonidos del huerto\">\n    <source src=\"sonidos-huerto.mp3\" type=\"audio/mpeg\">\n  </audio>\n  <h2>Cómo plantar una semilla</h2>\n  <video controls aria-label=\"Video: cómo plantar una semilla\">\n    <source src=\"plantar-semilla.mp4\" type=\"video/mp4\">\n    <track kind=\"captions\" src=\"subtitulos-es.vtt\" srclang=\"es\" label=\"Español\">\n  </video>\n</main>",
+      solutionCss: "",
+      check: ({ htmlDocument }) => [
+        { label: "El audio tiene controles y nombre accesible.", passed: Boolean(htmlDocument.querySelector("audio[controls][aria-label]")?.getAttribute("aria-label").trim()) },
+        { label: "El video tiene controles y nombre accesible.", passed: Boolean(htmlDocument.querySelector("video[controls][aria-label]")?.getAttribute("aria-label").trim()) },
+        { label: "El video incluye una pista de subtítulos.", passed: htmlDocument.querySelector("video track[kind='captions'][srclang][label]") !== null }
+      ]
     }
   ],
   css: [
@@ -412,6 +477,80 @@ const exerciseSets = {
           { label: "El foco tiene un contorno visible.", passed: hasDeclaration(focus, ["outline", "outline-color", "outline-style", "outline-width"]) }
         ];
       }
+    },
+    {
+      id: "css-posicion",
+      title: "Superpone una etiqueta en una tarjeta",
+      prompt: "Coloca la etiqueta NUEVO dentro de la esquina de la tarjeta y asegúrate de que aparezca por encima de la imagen.",
+      requirements: [
+        "La tarjeta usa position: relative como referencia.",
+        "La etiqueta usa position: absolute.",
+        "La etiqueta establece su posición y un z-index."
+      ],
+      hint: "Pon position: relative en .escena. En .etiqueta usa position: absolute, top, right y z-index.",
+      html: "<article class='escena'>\n  <img src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 320'%3E%3Crect width='640' height='320' fill='seagreen'/%3E%3C/svg%3E\" alt=\"Colinas verdes\">\n  <span class='etiqueta'>NUEVO</span>\n  <h1>Excursiones</h1>\n</article>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n}\n\n.escena {\n  max-width: 520px;\n  margin: 20px auto;\n}\n\n.escena img {\n  display: block;\n  width: 100%;\n}\n\n.etiqueta {\n  padding: 8px 12px;\n  color: white;\n  background-color: #e85d3f;\n}",
+      solutionExplanation: "position: relative crea el contexto para ubicar la etiqueta absoluta con respecto a la tarjeta. z-index controla el orden de apilamiento dentro de ese contexto.",
+      solutionHtml: "<article class='escena'>\n  <img src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 320'%3E%3Crect width='640' height='320' fill='seagreen'/%3E%3C/svg%3E\" alt=\"Colinas verdes\">\n  <span class='etiqueta'>NUEVO</span>\n  <h1>Excursiones</h1>\n</article>",
+      solutionCss: ".escena {\n  position: relative;\n  max-width: 520px;\n  margin: 20px auto;\n}\n\n.etiqueta {\n  position: absolute;\n  top: 12px;\n  right: 12px;\n  z-index: 1;\n  padding: 8px 12px;\n  color: white;\n  background-color: #e85d3f;\n}",
+      check: ({ cssRules }) => {
+        const scene = getDeclarations(cssRules, ".escena");
+        const tag = getDeclarations(cssRules, ".etiqueta");
+        return [
+          { label: "La tarjeta usa position: relative.", passed: hasValue(scene, "position", "relative") },
+          { label: "La etiqueta usa position: absolute.", passed: hasValue(tag, "position", "absolute") },
+          { label: "La etiqueta define coordenadas y z-index.", passed: hasDeclaration(tag, ["top"]) && hasDeclaration(tag, ["right"]) && hasDeclaration(tag, ["z-index"]) }
+        ];
+      }
+    },
+    {
+      id: "css-desbordamiento",
+      title: "Controla el contenido que se desborda",
+      prompt: "Limita la altura del panel de comentarios y permite desplazarse dentro de él sin que el contenido invada el resto de la página.",
+      requirements: [
+        "El panel tiene una altura máxima definida.",
+        "El panel controla el desbordamiento vertical.",
+        "El panel mantiene su padding."
+      ],
+      hint: "En .comentarios añade max-height, overflow-y: auto y padding.",
+      html: "<main>\n  <h1>Comentarios del club</h1>\n  <section class='comentarios'>\n    <p>La historia comienza en un pueblo junto al mar.</p>\n    <p>Mi personaje favorito cambia de opinión.</p>\n    <p>El final me hizo pensar en el primer capítulo.</p>\n    <p>Quiero recomendar este libro a mis amigos.</p>\n    <p>La próxima semana podemos conversar sobre los personajes.</p>\n  </section>\n</main>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n}\n\n.comentarios {\n  width: 100%;\n  max-width: 520px;\n  border: 1px solid #d7d0c0;\n  background-color: #f5f1e7;\n}",
+      solutionExplanation: "max-height limita el alto del panel. overflow-y: auto agrega desplazamiento vertical solo cuando el contenido supera ese límite.",
+      solutionHtml: "<main>\n  <h1>Comentarios del club</h1>\n  <section class='comentarios'>\n    <p>La historia comienza en un pueblo junto al mar.</p>\n    <p>Mi personaje favorito cambia de opinión.</p>\n    <p>El final me hizo pensar en el primer capítulo.</p>\n    <p>Quiero recomendar este libro a mis amigos.</p>\n    <p>La próxima semana podemos conversar sobre los personajes.</p>\n  </section>\n</main>",
+      solutionCss: ".comentarios {\n  max-width: 520px;\n  max-height: 180px;\n  overflow-y: auto;\n  padding: 16px;\n  border: 1px solid #d7d0c0;\n  background-color: #f5f1e7;\n}",
+      check: ({ cssRules }) => {
+        const panel = getDeclarations(cssRules, ".comentarios");
+        return [
+          { label: "El panel limita su altura con max-height.", passed: hasDeclaration(panel, ["max-height"]) },
+          { label: "El panel controla el desbordamiento vertical.", passed: hasDeclaration(panel, ["overflow", "overflow-y"]) },
+          { label: "El panel conserva espacio interior con padding.", passed: hasDeclaration(panel, ["padding"]) }
+        ];
+      }
+    },
+    {
+      id: "css-variables-fluido",
+      title: "Crea un título fluido con variables",
+      prompt: "Define colores reutilizables y haz que el título crezca de forma fluida sin volverse demasiado pequeño o enorme.",
+      requirements: [
+        "La regla :root define una variable de color.",
+        "El título usa la variable con var().",
+        "El tamaño del título usa clamp()."
+      ],
+      hint: "En :root define --color-acento. En h1 usa color: var(--color-acento) y font-size: clamp(2rem, 6vw, 4rem).",
+      html: "<main>\n  <p class='etiqueta'>EXPLORA Y APRENDE</p>\n  <h1>Ideas que ocupan espacio</h1>\n  <p>Estira o reduce el ancho de la vista previa para observar el título.</p>\n</main>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n}\n\n:root {\n  --color-acento: #3448c5;\n  --color-suave: #f0c65e;\n}\n\n.etiqueta {\n  color: var(--color-acento);\n  background-color: var(--color-suave);\n}\n\nh1 {\n  color: var(--color-acento);\n}",
+      solutionExplanation: "Las variables CSS guardan valores reutilizables y se leen con var(). clamp() limita el tamaño fluido entre un mínimo y un máximo.",
+      solutionHtml: "<main>\n  <p class='etiqueta'>EXPLORA Y APRENDE</p>\n  <h1>Ideas que ocupan espacio</h1>\n  <p>Estira o reduce el ancho de la vista previa para observar el título.</p>\n</main>",
+      solutionCss: ":root {\n  --color-acento: #3448c5;\n}\n\nh1 {\n  color: var(--color-acento);\n  font-size: clamp(2rem, 6vw, 4rem);\n}",
+      check: ({ cssRules }) => {
+        const root = getDeclarations(cssRules, ":root");
+        const heading = getDeclarations(cssRules, "h1");
+        return [
+          { label: ":root define una variable de color.", passed: root.some((declaration) => declaration.property.startsWith("--")) },
+          { label: "El título usa var() para aplicar la variable.", passed: heading.some((declaration) => declaration.value.includes("var(")) },
+          { label: "El tamaño del título usa clamp().", passed: heading.some((declaration) => declaration.property === "font-size" && declaration.value.includes("clamp(")) }
+        ];
+      }
     }
   ],
   combinado: [
@@ -592,6 +731,92 @@ const exerciseSets = {
           { label: "La navegación tiene nombre accesible y apunta a una sección.", passed: Boolean(nav?.getAttribute("aria-label").trim()) && hasDestination },
           { label: "Hay dos artículos con título e imagen con texto alternativo.", passed: articles.length >= 2 && articles.every((article) => article.querySelector("h3") && Boolean(article.querySelector("img[alt]")?.getAttribute("alt").trim())) },
           { label: "CSS define una variable, Grid y una columna para móvil.", passed: variables.some((declaration) => declaration.property.startsWith("--")) && hasValue(collection, "display", "grid") && hasAtLeastColumns(collection) && mobileColumns }
+        ];
+      }
+    },
+    {
+      id: "combo-evento",
+      title: "Publica una invitación adaptable",
+      prompt: "Crea una invitación a un evento con detalles y un formulario validado. Usa variables y tamaños fluidos para darle estilo.",
+      requirements: [
+        "El HTML incluye fecha, fieldset y un correo obligatorio correctamente etiquetado.",
+        "CSS define una variable de color y un título con tamaño clamp().",
+        "El formulario presenta sus campos en una cuadrícula adaptable."
+      ],
+      hint: "Usa time datetime, fieldset/legend, label con for/id y required. En CSS agrega :root, clamp() y Grid con @media.",
+      html: "<main class='invitacion'>\n  <p>ENCUENTRO DE LECTURA</p>\n  <h1>Una tarde entre libros</h1>\n  <time>Viernes a las 17:00</time>\n  <p>Trae un libro que quieras compartir con el grupo.</p>\n  <form class='registro'>\n    <fieldset>\n      <legend>Reserva tu lugar</legend>\n      <label>Tu correo</label>\n      <input id='correo' name='correo' type='email'>\n      <button type='submit'>Confirmar asistencia</button>\n    </fieldset>\n  </form>\n</main>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n  background-color: #f5f1e7;\n}\n\n.invitacion {\n  max-width: 760px;\n  margin: 0 auto;\n}\n\n.registro fieldset {\n  display: grid;\n  gap: 12px;\n  padding: 20px;\n}",
+      solutionExplanation: "time con datetime facilita interpretar la fecha. Los campos HTML validan la entrada y el CSS utiliza una variable, un título fluido y una cuadrícula que se adapta al espacio.",
+      solutionHtml: "<main class='invitacion'>\n  <p>ENCUENTRO DE LECTURA</p>\n  <h1>Una tarde entre libros</h1>\n  <time datetime='2026-11-20T17:00'>Viernes 20 de noviembre a las 17:00</time>\n  <p>Trae un libro que quieras compartir con el grupo.</p>\n  <form class='registro'>\n    <fieldset>\n      <legend>Reserva tu lugar</legend>\n      <label for='correo'>Tu correo</label>\n      <input id='correo' name='correo' type='email' required>\n      <button type='submit'>Confirmar asistencia</button>\n    </fieldset>\n  </form>\n</main>",
+      solutionCss: ":root {\n  --color-evento: #3448c5;\n}\n\n.invitacion h1 {\n  color: var(--color-evento);\n  font-size: clamp(2rem, 6vw, 4rem);\n}\n\n.registro fieldset {\n  display: grid;\n  grid-template-columns: repeat(2, minmax(0, 1fr));\n  gap: 12px;\n  padding: 20px;\n}\n\n@media (max-width: 600px) {\n  .registro fieldset {\n    grid-template-columns: 1fr;\n  }\n}",
+      check: ({ htmlDocument, cssRules }) => {
+        const label = htmlDocument.querySelector("label[for='correo']");
+        const email = htmlDocument.querySelector("input#correo[type='email']");
+        const root = getDeclarations(cssRules, ":root");
+        const heading = getDeclarations(cssRules, ".invitacion h1");
+        const form = getDeclarations(cssRules, ".registro fieldset");
+        const mobile = cssRules.some((rule) => rule.media && rule.media.includes("max-width") && rule.selector === ".registro fieldset" && hasValue(rule.declarations, "grid-template-columns", "1fr"));
+        return [
+          { label: "La fecha usa time y el formulario agrupa controles accesibles.", passed: htmlDocument.querySelector("time[datetime]") !== null && htmlDocument.querySelector("fieldset legend") !== null && Boolean(label && email?.required && label.htmlFor === email.id) },
+          { label: "CSS define una variable de color y un título con clamp().", passed: root.some((declaration) => declaration.property.startsWith("--")) && heading.some((declaration) => declaration.property === "font-size" && declaration.value.includes("clamp(")) },
+          { label: "Los campos usan Grid y se reorganizan en una columna en móvil.", passed: hasValue(form, "display", "grid") && hasAtLeastColumns(form) && mobile }
+        ];
+      }
+    },
+    {
+      id: "combo-pista-ayuda",
+      title: "Añade una pista que aparece al interactuar",
+      prompt: "Crea un enlace de ayuda con una nota generada por CSS. La pista debe aparecer al pasar el ratón o al enfocar el enlace con teclado.",
+      requirements: [
+        "El enlace .ayuda tiene texto comprensible y un title descriptivo.",
+        "La regla .ayuda::after crea contenido con attr(title).",
+        "La pista se muestra con :hover y :focus-visible."
+      ],
+      hint: "Define .ayuda::after con content: attr(title) y visibility: hidden. Cambia a visible en .ayuda:hover::after y .ayuda:focus-visible::after.",
+      html: "<main>\n  <h1>¿Necesitas ayuda?</h1>\n  <p>En el editor, pulsa <a class='ayuda' href='#requisitos' title='Un requisito describe lo que tu página debe incluir.'>¿Qué es un requisito?</a></p>\n  <section id='requisitos'><h2>Los requisitos</h2><p>Comprueba cada punto antes de enviar.</p></section>\n</main>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n}\n\n.ayuda {\n  position: relative;\n}\n\n.ayuda::after {\n  content: attr(title);\n  visibility: hidden;\n  position: absolute;\n  top: 100%;\n  left: 0;\n  width: 240px;\n  padding: 10px;\n  color: white;\n  background-color: #20243a;\n}\n\n.ayuda:hover::after,\n.ayuda:focus-visible::after {\n  visibility: visible;\n}",
+      solutionExplanation: "El pseudoelemento ::after añade una pista visual sin cambiar el HTML. attr(title) reutiliza el texto del atributo y los estados hover y focus-visible la hacen accesible con ratón y teclado.",
+      solutionHtml: "<main>\n  <h1>¿Necesitas ayuda?</h1>\n  <p>En el editor, pulsa <a class='ayuda' href='#requisitos' title='Un requisito describe lo que tu página debe incluir.'>¿Qué es un requisito?</a></p>\n  <section id='requisitos'><h2>Los requisitos</h2><p>Comprueba cada punto antes de enviar.</p></section>\n</main>",
+      solutionCss: ".ayuda {\n  position: relative;\n}\n\n.ayuda::after {\n  content: attr(title);\n  visibility: hidden;\n  position: absolute;\n  top: 100%;\n  left: 0;\n  width: 240px;\n  padding: 10px;\n  color: white;\n  background-color: #20243a;\n}\n\n.ayuda:hover::after,\n.ayuda:focus-visible::after {\n  visibility: visible;\n}",
+      check: ({ htmlDocument, cssRules }) => {
+        const link = htmlDocument.querySelector("a.ayuda[title]");
+        const tooltip = getDeclarations(cssRules, ".ayuda::after");
+        const visibleStates = cssRules
+          .flatMap((rule) => rule.selector.split(",").map((selector) => ({
+            selector: selector.trim(),
+            declarations: rule.declarations
+          })))
+          .filter((rule) => [".ayuda:hover::after", ".ayuda:focus-visible::after"].includes(rule.selector));
+        return [
+          { label: "El enlace de ayuda tiene texto y un title descriptivo.", passed: Boolean(link?.textContent.trim() && link?.getAttribute("title").trim()) },
+          { label: "::after genera la pista usando attr(title).", passed: tooltip.some((declaration) => declaration.property === "content" && declaration.value.includes("attr(title)")) },
+          { label: "La pista se muestra al usar hover y focus-visible.", passed: [".ayuda:hover::after", ".ayuda:focus-visible::after"].every((selector) => visibleStates.some((rule) => rule.selector === selector && hasValue(rule.declarations, "visibility", "visible"))) }
+        ];
+      }
+    },
+    {
+      id: "combo-capa-panel",
+      title: "Construye un panel con capas y desplazamiento",
+      prompt: "Diseña un panel de anuncio con una etiqueta superpuesta y texto que pueda desplazarse dentro de un alto limitado.",
+      requirements: [
+        "El panel establece position: relative y contiene un elemento position: absolute.",
+        "La etiqueta superpuesta define z-index.",
+        "El texto del panel tiene max-height y overflow-y."
+      ],
+      hint: "En .panel usa position: relative. En .sello usa position: absolute y z-index. Limita .detalle con max-height y overflow-y: auto.",
+      html: "<main>\n  <article class='panel'>\n    <span class='sello'>NUEVO</span>\n    <h1>Festival de historias</h1>\n    <div class='detalle'>\n      <p>Habrá lectura en voz alta, intercambio de libros y talleres para compartir historias.</p>\n      <p>La actividad se realizará en la biblioteca del barrio durante toda la tarde. Las familias pueden traer una manta, agua y un libro para intercambiar.</p>\n      <p>Inscríbete con anticipación para ayudar a organizar los grupos.</p>\n    </div>\n  </article>\n</main>",
+      css: "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Arial, sans-serif;\n}\n\n.panel {\n  max-width: 520px;\n  margin: 24px auto;\n  padding: 24px;\n  border: 1px solid #d7d0c0;\n  background-color: #f5f1e7;\n}\n\n.sello {\n  padding: 8px;\n  color: white;\n  background-color: #e85d3f;\n}\n\n.detalle {\n  padding: 12px;\n}",
+      solutionExplanation: "La posición relativa establece el contexto para el sello absoluto; z-index lo coloca por encima. El área de detalle limita su alto y habilita desplazamiento cuando hay más texto.",
+      solutionHtml: "<main>\n  <article class='panel'>\n    <span class='sello'>NUEVO</span>\n    <h1>Festival de historias</h1>\n    <div class='detalle'>\n      <p>Habrá lectura en voz alta, intercambio de libros y talleres para compartir historias.</p>\n      <p>La actividad se realizará en la biblioteca del barrio durante toda la tarde. Las familias pueden traer una manta, agua y un libro para intercambiar.</p>\n      <p>Inscríbete con anticipación para ayudar a organizar los grupos.</p>\n    </div>\n  </article>\n</main>",
+      solutionCss: ".panel {\n  position: relative;\n  max-width: 520px;\n  margin: 24px auto;\n  padding: 24px;\n  border: 1px solid #d7d0c0;\n  background-color: #f5f1e7;\n}\n\n.sello {\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  z-index: 1;\n  padding: 8px;\n  color: white;\n  background-color: #e85d3f;\n}\n\n.detalle {\n  max-height: 120px;\n  overflow-y: auto;\n  padding: 12px;\n}",
+      check: ({ cssRules }) => {
+        const panel = getDeclarations(cssRules, ".panel");
+        const seal = getDeclarations(cssRules, ".sello");
+        const detail = getDeclarations(cssRules, ".detalle");
+        return [
+          { label: "El panel usa position: relative y el sello position: absolute.", passed: hasValue(panel, "position", "relative") && hasValue(seal, "position", "absolute") },
+          { label: "El sello define z-index.", passed: hasDeclaration(seal, ["z-index"]) },
+          { label: "El texto limita el alto y controla overflow vertical.", passed: hasDeclaration(detail, ["max-height"]) && hasDeclaration(detail, ["overflow", "overflow-y"]) }
         ];
       }
     }

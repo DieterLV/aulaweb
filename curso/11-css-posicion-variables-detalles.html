@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Aprende position, z-index, overflow, pseudoelementos y valores fluidos en CSS.">
+  <title>CSS avanzado: posición y detalles</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="marca" href="index.html">Aula Web</a>
+      <nav aria-label="Navegación del curso"><a href="css/index.html">Curso de CSS</a></nav>
+    </div>
+  </header>
+  <main class="contenedor contenido">
+    <h1>11. CSS: posición, desbordamiento y valores fluidos</h1>
+    <p class="introduccion">Estas herramientas permiten colocar elementos por capas, controlar contenido largo y crear diseños que se ajusten con suavidad al espacio disponible.</p>
+
+    <section class="panel">
+      <h2>Posiciona elementos y organiza capas</h2>
+      <p><code>position: relative</code> conserva el lugar del elemento y establece una referencia. Un hijo con <code>position: absolute</code> se coloca respecto a esa referencia usando propiedades como <code>top</code> y <code>right</code>.</p>
+      <pre><code>.tarjeta {
+  position: relative;
+}
+
+.etiqueta {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+}</code></pre>
+      <p><code>z-index</code> controla qué elemento se dibuja por encima dentro de su contexto de apilamiento. Úsalo con cuidado: números cada vez mayores no arreglan un contexto mal entendido.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Controla contenido que no cabe</h2>
+      <p>Las propiedades <code>overflow</code>, <code>overflow-x</code> y <code>overflow-y</code> deciden qué hacer cuando el contenido supera el espacio de una caja. <code>auto</code> muestra desplazamiento cuando hace falta; <code>hidden</code> puede ocultar contenido importante, así que úsalo con intención.</p>
+      <div class="demostracion comentarios-avanzados">
+        <p>Un panel puede contener comentarios, instrucciones o detalles largos. El contenido debe seguir disponible sin invadir el resto de la página.</p>
+        <p>Cuando el espacio es limitado, un área desplazable permite leer el texto completo manteniendo el tamaño del panel bajo control.</p>
+      </div>
+      <pre><code>.comentarios {
+  max-height: 180px;
+  overflow-y: auto;
+  padding: 1rem;
+}</code></pre>
+    </section>
+
+    <section class="panel">
+      <h2>Añade detalles con pseudoelementos</h2>
+      <p><code>::before</code> y <code>::after</code> crean detalles de presentación desde CSS. La propiedad <code>content</code> genera el contenido decorativo; no reemplaza información esencial ni etiquetas HTML.</p>
+      <pre><code>.enlace-ayuda::after {
+  content: " →";
+}
+
+.enlace-ayuda:focus-visible {
+  outline: 3px solid #e85d3f;
+}</code></pre>
+      <p>Para mostrar información necesaria, es preferible incluirla en el HTML y darle un estado visual claro para <code>:hover</code> y <code>:focus-visible</code>.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Variables y tamaños fluidos</h2>
+      <p>Las propiedades personalizadas se declaran con <code>--nombre</code> y se leen con <code>var()</code>. <code>clamp(mínimo, preferido, máximo)</code> permite que un tamaño crezca o se reduzca sin rebasar límites.</p>
+      <pre><code>:root {
+  --color-acento: #3448c5;
+  --espacio: 1rem;
+}
+
+h1 {
+  color: var(--color-acento);
+  font-size: clamp(2rem, 6vw, 4rem);
+}</code></pre>
+      <p>Usa medidas fluidas en conjunto con límites y comprueba el resultado en distintas anchuras, no solo en una captura.</p>
+    </section>
+
+    <aside class="llamada-siguiente">
+      <div><span class="sobrelinea">EXPERIMENTA EN EL EDITOR</span><h2>Coloca, limita y adapta</h2><p>Prueba posición, capas, desbordamiento, pseudoelementos y tamaños fluidos.</p></div>
+      <a class="boton-principal" href="css/practica.html">Abrir práctica CSS <span aria-hidden="true">→</span></a>
+    </aside>
+    <p class="ejemplos-previos">Luego resuelve <a href="ejercicios/css.html">retos de CSS con revisión y soluciones</a>.</p>
+    <nav class="siguiente" aria-label="Navegación entre lecciones">
+      <a href="09-css-adaptable-estados.html">← Diseño adaptable y estados</a>
+      <a href="combinado/index.html">Siguiente: curso combinado →</a>
+    </nav>
+  </main>
+  <footer class="pie"><p>Lección avanzada · CSS</p></footer>
+</body>
+</html>
